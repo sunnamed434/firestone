@@ -40,14 +40,20 @@ export class CollectionManager {
 	public async getCollection(skipMemoryReading = false): Promise<Card[]> {
 		console.log('[collection-manager] getting collection', skipMemoryReading);
 		const collection = !skipMemoryReading ? await this.memoryReading.getCollection() : null;
-		console.debug('[collection-manager] got collection', collection);
+		console.debug(
+			'[collection-manager] got collection',
+			collection?.filter((card) => card.id === 'BAR_705'),
+		);
 		if (!collection || collection.length === 0) {
 			console.log('[collection-manager] retrieving collection from db');
 			const collectionFromDb = await this.db.getCollection();
 			console.log('[collection-manager] retrieved collection from db', collectionFromDb.length);
 			return collectionFromDb;
 		} else {
-			console.log('[collection-manager] retrieved collection from MindVision, updating collection in db');
+			console.log(
+				'[collection-manager] retrieved collection from MindVision, updating collection in db',
+				collection?.filter((card) => card.id === 'BAR_705'),
+			);
 			const savedCollection = await this.db.saveCollection(collection);
 			return savedCollection;
 		}

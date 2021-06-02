@@ -84,7 +84,13 @@ export class MemoryInspectionService {
 	}
 
 	public async getCollection(): Promise<readonly Card[]> {
-		return this.getCollectionOperation.call();
+		const result = await this.getCollectionOperation.call();
+		console.log(
+			'[mind-vision] getCollectionOperation called',
+			result?.length,
+			result?.filter((card) => card.id === 'BAR_705'),
+		);
+		return result;
 	}
 
 	public async getCardBacks(): Promise<readonly CardBack[]> {

@@ -12,17 +12,22 @@ export class GetCollectionOperation extends MindVisionOperationFacade<readonly C
 			ow,
 			'getCollection',
 			() => mindVision.getCollection(),
-			(memoryCollection: any[]) =>
-				memoryCollection.length === 0 ||
-				memoryCollection.every((entry) => entry.Count + entry.PremiumCount === 0),
-			//  ||
-			// // If there are no classic cards, we consider that the collection has not
-			// // been fetched from memory yet
-			// memoryCollection
-			// 	.filter(entry => this.getBasicCards().indexOf(entry.CardId) !== -1)
-			// 	.every(entry => entry.Count + entry.PremiumCount + entry.DiamondCount === 0),
-			(memoryCollection) =>
-				memoryCollection.map(
+			(memoryCollection: any[]) => {
+				console.log(
+					'[mind-vision] collection empty check',
+					memoryCollection.filter((card) => card.id === 'BAR_705'),
+				);
+				return (
+					memoryCollection.length === 0 ||
+					memoryCollection.every((entry) => entry.Count + entry.PremiumCount === 0)
+				);
+			},
+			(memoryCollection) => {
+				console.log(
+					'[mind-vision] collection transform',
+					memoryCollection.filter((card) => card.id === 'BAR_705'),
+				);
+				return memoryCollection.map(
 					(memoryCard) =>
 						({
 							id: memoryCard.CardId,
@@ -30,7 +35,8 @@ export class GetCollectionOperation extends MindVisionOperationFacade<readonly C
 							premiumCount: memoryCard.PremiumCount,
 							diamondCount: memoryCard.DiamondCount,
 						} as Card),
-				),
+				);
+			},
 			20,
 			5000,
 		);

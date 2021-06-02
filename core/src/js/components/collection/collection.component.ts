@@ -128,7 +128,7 @@ export class CollectionComponent {
 		this.dataState = state;
 		this.standardSets = state.allSets.filter((set) => set.standard);
 		this.wildSets = state.allSets.filter((set) => !set.standard);
-		// console.log('set state in collection', this._state);
+		console.log('Looking for sigil of silence', state.getCard('BAR_705'), state.getAllCards().length);
 		this.updateValues();
 	}
 
