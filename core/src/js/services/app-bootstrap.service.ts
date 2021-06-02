@@ -21,6 +21,7 @@ import { DungeonLootParserService } from './decktracker/dungeon-loot-parser.serv
 import { GameStateService } from './decktracker/game-state.service';
 import { OverlayDisplayService } from './decktracker/overlay-display.service';
 import { DevService } from './dev.service';
+import { GameSessionService } from './game-session.service';
 import { GlobalStatsNotifierService } from './global-stats/global-stats-notifier.service';
 import { LogRegisterService } from './log-register.service';
 import { OutOfCardsService } from './mainwindow/out-of-cards.service';
@@ -87,6 +88,7 @@ export class AppBootstrapService {
 		private init_RewardMonitorService: RewardMonitorService,
 		private init_BgsRealTimeStatsService: RealTimeStatsService,
 		private init_LogParserService: CardsMonitorService,
+		private init_gameSessionService: GameSessionService,
 	) {}
 
 	public async init() {

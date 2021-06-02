@@ -5,6 +5,7 @@ import { AchievementsState } from './achievements-state';
 import { BattlegroundsAppState } from './battlegrounds/battlegrounds-app-state';
 import { BinderState } from './binder-state';
 import { DecktrackerState } from './decktracker/decktracker-state';
+import { GameSessionState } from './game-session/game-session-state';
 import { ReplaysState } from './replays/replays-state';
 import { SocialShareUserInfo } from './social-share-user-info';
 import { GameStat } from './stats/game-stat';
@@ -21,6 +22,7 @@ export class MainWindowState {
 	readonly duels: DuelsState = new DuelsState();
 	readonly socialShareUserInfo: SocialShareUserInfo = new SocialShareUserInfo();
 	readonly stats: StatsState = new StatsState();
+	readonly gameSessionState: GameSessionState = new GameSessionState();
 	readonly globalStats: GlobalStats = new GlobalStats();
 	readonly showAds: boolean = true;
 

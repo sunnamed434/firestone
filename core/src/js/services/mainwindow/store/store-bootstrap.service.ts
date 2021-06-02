@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { DuelsState } from '../../../models/duels/duels-state';
 import { AchievementsState } from '../../../models/mainwindow/achievements-state';
 import { DecktrackerState } from '../../../models/mainwindow/decktracker/decktracker-state';
+import { GameSessionState } from '../../../models/mainwindow/game-session/game-session-state';
 import { MainWindowState } from '../../../models/mainwindow/main-window-state';
 import { ReplaysState } from '../../../models/mainwindow/replays/replays-state';
 import { SocialShareUserInfo } from '../../../models/mainwindow/social-share-user-info';
@@ -16,6 +17,7 @@ import { DecktrackerStateLoaderService } from '../../decktracker/main/decktracke
 import { ReplaysStateBuilderService } from '../../decktracker/main/replays-state-builder.service';
 import { DuelsStateBuilderService } from '../../duels/duels-state-builder.service';
 import { Events } from '../../events.service';
+import { GameSessionService } from '../../game-session.service';
 import { GlobalStatsService } from '../../global-stats/global-stats.service';
 import { OverwolfService } from '../../overwolf.service';
 import { PatchesConfigService } from '../../patches-config.service';
@@ -49,6 +51,7 @@ export class StoreBootstrapService {
 		private readonly patchConfig: PatchesConfigService,
 		private readonly duels: DuelsStateBuilderService,
 		private readonly dungeonLoot: DungeonLootParserService,
+		private readonly gameSessionService: GameSessionService,
 	) {
 		setTimeout(() => {
 			this.stateUpdater = this.ow.getMainWindow().mainWindowStoreUpdater;
@@ -177,6 +180,8 @@ export class StoreBootstrapService {
 			duelsStats?.currentDuelsMetaPatch || currentDuelsMetaPatch,
 		);
 
+		const gameSessionState: GameSessionState = this.gameSessionService.initState(bgsAppStateWithStats);
+
 		const initialWindowState = Object.assign(new MainWindowState(), {
 			currentUser: currentUser,
 			showFtue: !mergedPrefs.ftue.hasSeenGlobalFtue,
@@ -189,6 +194,7 @@ export class StoreBootstrapService {
 			socialShareUserInfo: socialShareUserInfo,
 			stats: newStatsState,
 			globalStats: globalStats,
+			gameSessionState: gameSessionState,
 		} as MainWindowState);
 		this.stateUpdater.next(new StoreInitEvent(initialWindowState, true));
 	}

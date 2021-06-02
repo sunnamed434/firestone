@@ -264,6 +264,7 @@ import { DevService } from '../../services/dev.service';
 import { DuelsStateBuilderService } from '../../services/duels/duels-state-builder.service';
 import { GameEventsEmitterService } from '../../services/game-events-emitter.service';
 import { GameEvents } from '../../services/game-events.service';
+import { GameSessionService } from '../../services/game-session.service';
 import { GlobalStatsNotifierService } from '../../services/global-stats/global-stats-notifier.service';
 import { GlobalStatsService } from '../../services/global-stats/global-stats.service';
 import { LogListenerService } from '../../services/log-listener.service';
@@ -589,6 +590,7 @@ const components = [
 		CollaboratorsService,
 		UserService,
 		ApiRunner,
+		GameSessionService,
 
 		DevService,
 		GameEvents,

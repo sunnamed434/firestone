@@ -1,6 +1,7 @@
 import { DuelsState } from '../../../../../models/duels/duels-state';
 import { BattlegroundsAppState } from '../../../../../models/mainwindow/battlegrounds/battlegrounds-app-state';
 import { DecktrackerState } from '../../../../../models/mainwindow/decktracker/decktracker-state';
+import { GameSessionState } from '../../../../../models/mainwindow/game-session/game-session-state';
 import { MainWindowState } from '../../../../../models/mainwindow/main-window-state';
 import { NavigationState } from '../../../../../models/mainwindow/navigation/navigation-state';
 import { ReplaysState } from '../../../../../models/mainwindow/replays/replays-state';
@@ -40,6 +41,9 @@ export class RecomputeGameStatsProcessor implements Processor {
 		const newStatsState: StatsState = Object.assign(new StatsState(), currentState.stats, {
 			gameStats: newGameStats,
 		} as StatsState);
+		const newSessionState: GameSessionState = currentState.gameSessionState.update({
+			matches: [event.gameStat, ...currentState.gameSessionState.matches] as readonly GameStat[],
+		} as GameSessionState);
 
 		const prefs = await this.prefs.getPreferences();
 		const decktracker: DecktrackerState = this.decktrackerStateLoader.buildState(
@@ -78,6 +82,7 @@ export class RecomputeGameStatsProcessor implements Processor {
 				replays: replayState,
 				battlegrounds: battlegrounds,
 				duels: duels,
+				gameSessionState: newSessionState,
 			} as MainWindowState),
 			null,
 		];

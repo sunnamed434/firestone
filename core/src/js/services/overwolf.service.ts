@@ -53,6 +53,32 @@ export class OverwolfService {
 	public static COUNTER_PLAYER_ELEMENTAL_WINDOW = 'CounterPlayerElemental';
 	public static BGS_COUNTER_PLAYER_POGO_WINDOW = 'BgsCounterPlayerPogo';
 
+	private onGameStartListeners: (() => void)[] = [];
+	private onGameEndListeners: (() => void)[] = [];
+
+	constructor() {
+		this.init();
+	}
+
+	private init() {
+		this.addGameInfoUpdatedListener(async (res: any) => {
+			// console.log('[bootstrap] updated game status', res);
+			if (this.exitGame(res) && res.runningChanged) {
+				this.onGameEndListeners.forEach((listener) => listener());
+			} else if (await this.inGame()) {
+				this.onGameStartListeners.forEach((listener) => listener());
+			}
+		});
+	}
+
+	onGameStart(listener: () => void) {
+		this.onGameStartListeners.push(listener);
+	}
+
+	onGameExit(listener: () => void) {
+		this.onGameEndListeners.push(listener);
+	}
+
 	public isOwEnabled(): boolean {
 		try {
 			return overwolf && overwolf.windows;
