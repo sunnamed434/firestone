@@ -65,7 +65,7 @@ export class TwitchAuthService {
 		console.log('[twitch-auth] handler init done');
 	}
 
-	public async emitDeckEvent(event: any) {
+	public async emitDeckEvent(event: DeckEvent) {
 		this.processingQueue.enqueue(event);
 	}
 
@@ -73,7 +73,7 @@ export class TwitchAuthService {
 		this.bgsProcessingQueue.enqueue(event);
 	}
 
-	private async processQueue(eventQueue: readonly any[]): Promise<readonly any[]> {
+	private async processQueue(eventQueue: readonly DeckEvent[]): Promise<readonly DeckEvent[]> {
 		// Debounce events
 		if (Date.now() - this.lastProcessTimestamp < 4000) {
 			return eventQueue;
@@ -95,69 +95,80 @@ export class TwitchAuthService {
 		return [];
 	}
 
-	private async emitEvent(event: any) {
-		// return;
-		let newEvent = Object.assign(
-			{
-				type: 'deck-event',
-			},
-			event,
-		);
-		if (!newEvent.state) {
-			newEvent = Object.assign({}, newEvent, {
-				state: GameState.create(),
-			});
+	private async emitEvent(event: DeckEvent) {
+		if (!event?.state) {
+			return;
 		}
 
-		// TODO: clean this to only send the relevant info
 		const newState = Object.assign(new GameState(), {
-			playerDeck: newEvent.state.playerDeck,
-			opponentDeck: newEvent.state.opponentDeck,
-			mulliganOver: newEvent.state.mulliganOver,
-			metadata: newEvent.state.metadata,
-			currentTurn: newEvent.state.currentTurn,
-			gameStarted: newEvent.state.gameStarted,
-			gameEnded: newEvent.state.gameEnded,
+			playerDeck: this.isBgs(event) ? undefined : this.cleanUpDeckState(event.state.playerDeck),
+			opponentDeck: this.isBgs(event) ? undefined : this.cleanUpDeckState(event.state.opponentDeck),
+			mulliganOver: event.state.mulliganOver,
+			metadata: event.state.metadata,
+			currentTurn: event.state.currentTurn,
+			gameStarted: event.state.gameStarted,
+			gameEnded: event.state.gameEnded,
 		} as GameState);
-
-		newEvent = Object.assign({}, newEvent, {
+		const newEvent: DeckEvent = Object.assign(event, {
+			type: 'deck-event',
 			state: newState,
 		});
-
-		// Tmp fix until we fix the twitch extension
-		if (!newEvent.state.playerDeck.deckList || newEvent.state.playerDeck.deckList.length === 0) {
-			const newDeck: readonly DeckCard[] = [
-				...newEvent.state.playerDeck.deck,
-				...newEvent.state.playerDeck.hand,
-				...newEvent.state.playerDeck.otherZone,
-			].sort((a, b) => a.manaCost - b.manaCost);
-			const newPlayerDeck = Object.assign(new DeckState(), newEvent.state.playerDeck, {
-				deck: newDeck,
-			} as DeckState);
-			const newState = Object.assign(new GameState(), newEvent.state, {
-				playerDeck: newPlayerDeck,
-			} as GameState);
-			newEvent = Object.assign({}, newEvent, {
-				state: newState,
-			});
-			// console.log('fixed event to send', newEvent, event);
-		}
-		if (
-			newEvent.state &&
-			(newEvent.state.metadata.gameType === GameType.GT_BATTLEGROUNDS ||
-				newEvent.state.metadata.gameType === GameType.GT_BATTLEGROUNDS_FRIENDLY)
-		) {
-			// Don't show anything in the deck itself
-			const newState = Object.assign(new GameState(), newEvent.state, {
-				playerDeck: null,
-				opponentDeck: null,
-				deckStats: null,
-			} as GameState);
-			newEvent = Object.assign({}, newEvent, {
-				state: newState,
-			});
-		}
 		this.sendEvent(newEvent);
+	}
+
+	private cleanUpDeckState(deck: DeckState): DeckState {
+		return {
+			board: this.cleanCards(deck.board),
+			cardsLeftInDeck: deck.cardsLeftInDeck,
+			deck: this.cleanCards(deck.deck),
+			deckList: this.cleanCards(deck.deckList),
+			globalEffects: this.cleanCards(deck.globalEffects),
+			hand: this.cleanCards(deck.hand),
+			heroPower: this.cleanCard(deck.heroPower),
+			isActivePlayer: deck.isActivePlayer,
+			isFirstPlayer: deck.isFirstPlayer,
+			isOpponent: deck.isOpponent,
+			otherZone: this.cleanCards(deck.otherZone),
+			secretHelperActive: deck.secretHelperActive,
+			secrets: deck.secrets,
+			weapon: this.cleanCard(deck.weapon),
+			deckstring: deck.deckstring,
+			hero: deck.hero,
+			name: deck.name,
+		} as DeckState;
+	}
+
+	private cleanCards(cards: readonly DeckCard[]): readonly DeckCard[] {
+		return cards.map((card) => this.cleanCard(card));
+	}
+
+	private cleanCard(card: DeckCard): DeckCard {
+		return {
+			actualManaCost: card.actualManaCost,
+			cardId: card.cardId,
+			cardName: card.cardName,
+			cardType: card.cardType,
+			entityId: card.entityId,
+			inInitialDeck: card.inInitialDeck,
+			manaCost: card.manaCost,
+			metaInfo: card.metaInfo,
+			rarity: card.rarity,
+			zone: card.zone,
+			buffCardIds: card.buffCardIds,
+			buffingEntityCardIds: card.buffingEntityCardIds,
+			creatorCardId: card.creatorCardId,
+			lastAffectedByCardId: card.lastAffectedByCardId,
+			dormant: card.dormant,
+			milled: card.milled,
+			temporaryCard: card.temporaryCard,
+		} as DeckCard;
+	}
+
+	private isBgs(newEvent: DeckEvent) {
+		return (
+			newEvent.state.metadata.gameType === GameType.GT_BATTLEGROUNDS ||
+			newEvent.state.metadata.gameType === GameType.GT_BATTLEGROUNDS_FRIENDLY
+		);
 	}
 
 	private async emitBgsEvent(state: BattlegroundsState) {
@@ -497,4 +508,12 @@ export class TwitchAuthService {
 interface Cleaner {
 	selector: (battle: TwitchBgsCurrentBattle) => number;
 	cleaner: (outcomeSamples: OutcomeSamples) => OutcomeSamples;
+}
+
+interface DeckEvent {
+	event: {
+		name: string;
+	};
+	type: string;
+	state: GameState;
 }
