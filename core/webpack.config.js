@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
+const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
 const DefinePlugin = require('webpack').DefinePlugin;
+const TerserPlugin = require('terser-webpack-plugin');
 const BannerPlugin = require('webpack').BannerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-// const AngularCompilerPlugin = require('@artonge/webpack').AngularCompilerPlugin;
-const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
+const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
 
 var path = require('path');
 
@@ -45,7 +44,7 @@ const entry = {
 	'bgspostmatchstats.worker': './src/js/workers/bgs-post-match-stats.worker.ts',
 };
 
-module.exports = function(env, argv) {
+module.exports = function (env, argv) {
 	const plugins = [
 		// Define environment variables to export to Angular
 		new DefinePlugin({
@@ -65,6 +64,7 @@ module.exports = function(env, argv) {
 			entryOnly: true,
 			test: /bgsbattlesimulationworker/,
 		}),
+
 		new BannerPlugin({
 			banner: `var window = self;importScripts("./vendor.js");`,
 			raw: true,
@@ -272,8 +272,8 @@ const buildHtmlWebpackPluginConf = (filename, chunkName) => {
 	// small enough that it should not matter (and we're serving them from
 	// the local filesystem, so in the end it doesn't really matter)
 	const excludedChunks = Object.keys(entry)
-		.filter(chunk => chunk !== chunkName)
-		.filter(chunk => chunk !== 'polyfills');
+		.filter((chunk) => chunk !== chunkName)
+		.filter((chunk) => chunk !== 'polyfills');
 	return new HtmlWebpackPlugin({
 		filename: filename,
 		template: `src/html/${filename}`,

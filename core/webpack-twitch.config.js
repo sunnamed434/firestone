@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const webpack = require('@artonge/webpack');
-// const ngcWebpack = require("ngc-webpack");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
-const AngularCompilerPlugin = webpack.AngularCompilerPlugin;
+const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
 const DefinePlugin = require('webpack').DefinePlugin;
-const SentryWebpackPlugin = require('@sentry/webpack-plugin');
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -21,7 +15,13 @@ function getRoot(args) {
 	return path.join.apply(path, [_root].concat(args));
 }
 
-module.exports = function(env, argv) {
+const entry = {
+	// Keep polyfills at the top so that it's imported first in the HTML
+	polyfills: './src/polyfills.ts',
+	decktracker: './src/js/modules/decktracker-twitch/main.ts',
+};
+
+module.exports = function (env, argv) {
 	const plugins = [
 		// Define environment variables to export to Angular
 		new DefinePlugin({
@@ -31,8 +31,8 @@ module.exports = function(env, argv) {
 
 		new AngularCompilerPlugin({
 			tsConfigPath: './tsconfig.json',
-			entryModules: ['./src/js/modules/decktracker-twitch/decktracker-twitch.module#DeckTrackerTwitchModule'],
-			sourceMap: true,
+			entryModule: './src/js/modules/decktracker-twitch/decktracker-twitch.module#DeckTrackerTwitchModule',
+			sourceMap: false,
 		}),
 
 		new MiniCssExtractPlugin({
@@ -43,21 +43,13 @@ module.exports = function(env, argv) {
 			{ from: path.join(process.cwd(), 'src/assets'), to: 'assets', ignore: ['**/twitch*/*'] },
 		]),
 
-		new HtmlWebpackPlugin({
-			filename: 'decktracker-twitch.html',
-			template: 'src/html/decktracker-twitch.html',
-			chunksSortMode: 'manual',
-		}),
+		buildHtmlWebpackPluginConf('decktracker-twitch.html', 'decktracker'),
 	];
 
 	return {
 		mode: env.production ? 'production' : 'development',
 
-		entry: {
-			// Keep polyfills at the top so that it's imported first in the HTML
-			polyfills: './src/polyfills.ts',
-			decktracker: './src/js/modules/decktracker-twitch/main.ts',
-		},
+		entry: entry,
 
 		// https://hackernoon.com/the-100-correct-way-to-split-your-chunks-with-webpack-f8a9df5b7758
 		optimization: env.production
@@ -68,11 +60,14 @@ module.exports = function(env, argv) {
 						new TerserPlugin({
 							cache: true,
 							parallel: true,
-							sourceMap: true, // Must be set to true if using source-maps in production
+							sourceMap: false,
 							terserOptions: {
 								mangle: false,
 								keep_classnames: true,
 								keep_fnames: true,
+								compress: {
+									pure_funcs: ['console.debug'],
+								},
 							},
 						}),
 					],
@@ -141,7 +136,7 @@ module.exports = function(env, argv) {
 				{
 					test: /\.ts$/,
 					exclude: [/node_modules/, /test/, /\.worker.ts$/],
-					use: ['@artonge/webpack', 'ts-loader'],
+					use: ['@ngtools/webpack', 'ts-loader'],
 				},
 				{
 					test: /\.worker.ts$/,
@@ -159,7 +154,22 @@ module.exports = function(env, argv) {
 				},
 			],
 		},
-
 		plugins: plugins,
 	};
+};
+
+const buildHtmlWebpackPluginConf = (filename, chunkName) => {
+	// Exclude the other modules. This will still import all the other chunks,
+	// thus probably importing some unrelated stuff, but they should be
+	// small enough that it should not matter (and we're serving them from
+	// the local filesystem, so in the end it doesn't really matter)
+	const excludedChunks = Object.keys(entry)
+		.filter((chunk) => chunk !== chunkName)
+		.filter((chunk) => chunk !== 'polyfills');
+	return new HtmlWebpackPlugin({
+		filename: filename,
+		template: `src/html/${filename}`,
+		excludeChunks: excludedChunks,
+		chunksSortMode: 'manual',
+	});
 };
