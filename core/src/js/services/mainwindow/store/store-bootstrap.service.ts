@@ -105,7 +105,7 @@ export class StoreBootstrapService {
 				collectionState,
 				currentScene,
 			],
-			[bgsBestUserStats, bgsPerfectGames],
+			[bgsBestUserStats, bgsPerfectGames, bgsCompositions],
 			[matchStats, archetypesConfig, archetypesStats],
 			[[duelsRunInfo, duelsRewardsInfo], duelsGlobalStats, duelsLeaderboard],
 			[arenaRewards],
@@ -120,7 +120,11 @@ export class StoreBootstrapService {
 				this.collectionBootstrap.initCollectionState(),
 				this.memory.getCurrentSceneFromMindVision(),
 			]),
-			Promise.all([this.bestBgsStats.getBgsBestUserStats(), this.bgsInit.loadPerfectGames()]),
+			Promise.all([
+				this.bestBgsStats.getBgsBestUserStats(),
+				this.bgsInit.loadPerfectGames(),
+				this.bgsInit.loadCompositions(),
+			]),
 			Promise.all([
 				this.gameStatsLoader.retrieveStats(),
 				this.gameStatsLoader.retrieveArchetypesConfig(),
@@ -145,6 +149,7 @@ export class StoreBootstrapService {
 		const battlegroundsAppState = await this.bgsInit.initBattlegoundsAppState(
 			bgsGlobalStats,
 			bgsPerfectGames,
+			bgsCompositions,
 			currentBattlegroundsMetaPatch,
 		);
 

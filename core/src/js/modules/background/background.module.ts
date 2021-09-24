@@ -60,6 +60,8 @@ import { BgsBannedTribesComponent } from '../../components/battlegrounds/bgs-ban
 import { BgsCardTooltipComponent } from '../../components/battlegrounds/bgs-card-tooltip.component';
 import { BattlegroundsCategoryDetailsComponent } from '../../components/battlegrounds/desktop/battlegrounds-category-details.component';
 import { BattlegroundsDesktopComponent } from '../../components/battlegrounds/desktop/battlegrounds-desktop.component';
+import { BattlegroundsCompositionRecapComponent } from '../../components/battlegrounds/desktop/categories/battlegrounds-composition-recap.component';
+import { BattlegroundsCompositionsComponent } from '../../components/battlegrounds/desktop/categories/battlegrounds-compositions.component';
 import { BattlegroundsPerfectGamesComponent } from '../../components/battlegrounds/desktop/categories/battlegrounds-perfect-games.component';
 import { BattlegroundsPersonalStatsHeroDetailsComponent } from '../../components/battlegrounds/desktop/categories/battlegrounds-personal-stats-hero-details.component';
 import { BattlegroundsPersonalStatsHeroesComponent } from '../../components/battlegrounds/desktop/categories/battlegrounds-personal-stats-heroes.component';
@@ -674,6 +676,8 @@ const components = [
 		BattlegroundsCategoryDetailsComponent,
 		BattlegroundsPersonalStatsHeroesComponent,
 		BattlegroundsStatsHeroVignetteComponent,
+		BattlegroundsCompositionsComponent,
+		BattlegroundsCompositionRecapComponent,
 		BattlegroundsPersonalStatsRatingComponent,
 		BattlegroundsPerfectGamesComponent,
 		BattlegroundsSimulatorComponent,

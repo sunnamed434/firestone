@@ -1,0 +1,29 @@
+.battlegrounds-compositions {
+	flex-grow: 1;
+	display: flex;
+	flex-wrap: wrap;
+
+	.button {
+		width: 100px;
+		height: 30px;
+		border: 1px solid var(--confirmation-text-color);
+		background: transparent;
+		color: var(--confirmation-text-color);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Open Sans', sans-serif;
+		margin-bottom: 15px;
+		font-size: 14px;
+
+		&:hover {
+			background: var(--on-confirmation-button-background-color);
+			color: var(--on-confirmation-text-color);
+		}
+	}
+
+	battlegrounds-composition-recap {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+}

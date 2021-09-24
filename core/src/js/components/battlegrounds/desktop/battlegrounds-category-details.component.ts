@@ -19,6 +19,7 @@ import { AbstractSubscriptionComponent } from '../../abstract-subscription.compo
 		>
 			<battlegrounds-personal-stats-heroes *ngIf="selectedCategoryId === 'bgs-category-personal-heroes'">
 			</battlegrounds-personal-stats-heroes>
+			<battlegrounds-compositions *ngIf="selectedCategoryId === 'bgs-compositions'"> </battlegrounds-compositions>
 			<battlegrounds-personal-stats-rating *ngIf="selectedCategoryId === 'bgs-category-personal-rating'">
 			</battlegrounds-personal-stats-rating>
 			<battlegrounds-personal-stats-stats *ngIf="selectedCategoryId === 'bgs-category-personal-stats'">

@@ -85,6 +85,13 @@ export const sumOnArray = <T>(array: readonly T[], prop: (item: T) => number): n
 	return array?.map((item) => prop(item)).reduce((a, b) => a + b, 0) ?? 0;
 };
 
+export const pickRandomElementInArray = <T>(array: readonly T[]): T => {
+	if (!array?.length) {
+		return null;
+	}
+	return array[Math.floor(Math.random() * array.length)];
+};
+
 export const sortByProperties = <T>(sorter: (t: T) => any[]): ((a: T, b: T) => number) => {
 	return (a: T, b: T): number => {
 		const aProps = sorter(a);

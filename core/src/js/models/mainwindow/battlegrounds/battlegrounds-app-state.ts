@@ -4,6 +4,7 @@ import { BgsStats } from '../../battlegrounds/stats/bgs-stats';
 import { PatchInfo } from '../../patches';
 import { GameStat } from '../stats/game-stat';
 import { BattlegroundsCategory } from './battlegrounds-category';
+import { BgsCompositionStat } from './bgs-composition-stat';
 import { BgsCustomSimulationState } from './simulator/bgs-custom-simulation-state';
 
 export class BattlegroundsAppState {
@@ -11,6 +12,7 @@ export class BattlegroundsAppState {
 	readonly categories: readonly BattlegroundsCategory[] = [];
 	readonly globalStats: BgsStats = new BgsStats();
 	readonly perfectGames: readonly GameStat[];
+	readonly compositions: readonly BgsCompositionStat[];
 	readonly currentBattlegroundsMetaPatch: PatchInfo;
 	readonly customSimulationState: BgsCustomSimulationState = new BgsCustomSimulationState();
 

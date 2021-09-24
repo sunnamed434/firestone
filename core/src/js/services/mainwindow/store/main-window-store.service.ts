@@ -11,6 +11,7 @@ import { AchievementsRepository } from '../../achievement/achievements-repositor
 import { AchievementsLoaderService } from '../../achievement/data/achievements-loader.service';
 import { RemoteAchievementsService } from '../../achievement/remote-achievements.service';
 import { BgsGlobalStatsService } from '../../battlegrounds/bgs-global-stats.service';
+import { BgsInitService } from '../../battlegrounds/bgs-init.service';
 import { BgsRunStatsService } from '../../battlegrounds/bgs-run-stats.service';
 import { CardHistoryStorageService } from '../../collection/card-history-storage.service';
 import { CollectionManager } from '../../collection/collection-manager.service';
@@ -50,6 +51,7 @@ import { BgsPersonalStatsSelectHeroDetailsEvent } from './events/battlegrounds/b
 import { BgsPersonalStatsSelectHeroDetailsWithRemoteInfoEvent } from './events/battlegrounds/bgs-personal-stats-select-hero-details-with-remote-info-event';
 import { BgsPostMatchStatsComputedEvent } from './events/battlegrounds/bgs-post-match-stats-computed-event';
 import { BgsRankFilterSelectedEvent } from './events/battlegrounds/bgs-rank-filter-selected-event';
+import { BgsReloadCompositionsEvent } from './events/battlegrounds/bgs-reload-compositions-event';
 import { BgsRequestNewGlobalStatsLoadEvent } from './events/battlegrounds/bgs-request-new-global-stats-load-event';
 import { BgsTimeFilterSelectedEvent } from './events/battlegrounds/bgs-time-filter-selected-event';
 import { BgsTribesFilterSelectedEvent } from './events/battlegrounds/bgs-tribes-filter-selected-event';
@@ -174,6 +176,7 @@ import { BgsPersonalStatsSelectHeroDetailsProcessor } from './processors/battleg
 import { BgsPersonalStatsSelectHeroDetailsWithRemoteInfoProcessor } from './processors/battlegrounds/bgs-personal-stats-select-hero-details-with-remote-info-processor';
 import { BgsPostMatchStatsComputedProcessor } from './processors/battlegrounds/bgs-post-match-stats-computed-event';
 import { BgsRankFilterSelectedProcessor } from './processors/battlegrounds/bgs-rank-filter-selected-processor';
+import { BgsReloadCompositionsProcessor } from './processors/battlegrounds/bgs-reload-compositions-processor';
 import { BgsRequestNewGlobalStatsLoadProcessor } from './processors/battlegrounds/bgs-request-new-global-stats-load-processor';
 import { BgsTimeFilterSelectedProcessor } from './processors/battlegrounds/bgs-time-filter-selected-processor';
 import { BgsTribesFilterSelectedProcessor } from './processors/battlegrounds/bgs-tribes-filter-selected-processor';
@@ -319,6 +322,7 @@ export class MainWindowStoreService {
 		private decktrackerStateLoader: DecktrackerStateLoaderService,
 		private readonly storeBootstrap: StoreBootstrapService,
 		private readonly bgsGlobalStats: BgsGlobalStatsService,
+		private readonly bgsInit: BgsInitService,
 		private readonly replaysStateBuilder: ReplaysStateBuilderService,
 		private readonly prefs: PreferencesService,
 		private readonly decksStateBuilder: DecksStateBuilderService,
@@ -683,6 +687,9 @@ export class MainWindowStoreService {
 
 			BgsRequestNewGlobalStatsLoadEvent.eventName(),
 			new BgsRequestNewGlobalStatsLoadProcessor(this.bgsGlobalStats),
+
+			BgsReloadCompositionsEvent.eventName(),
+			new BgsReloadCompositionsProcessor(this.bgsInit),
 
 			BgsHeroSortFilterSelectedEvent.eventName(),
 			new BgsHeroSortFilterSelectedProcessor(this.prefs),

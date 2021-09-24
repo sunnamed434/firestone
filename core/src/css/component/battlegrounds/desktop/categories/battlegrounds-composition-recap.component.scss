@@ -1,0 +1,86 @@
+.battlegrounds-composition-recap {
+	flex-grow: 1;
+	display: flex;
+	font-size: 14px;
+	border: 1px solid;
+	border-image: linear-gradient(-45deg, rgba(159, 182, 215, 0), #ffb948) 1;
+	background: rgba(255, 255, 255, 0.08);
+	margin-right: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+
+	.name {
+		width: 120px;
+		margin-right: 10px;
+		flex-shrink: 0;
+		color: var(--default-title-color);
+		display: flex;
+		align-items: center;
+	}
+
+	.minions {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin-right: 30px;
+		overflow: visible;
+		flex-shrink: 0;
+
+		::ng-deep bgs-board {
+			width: 450px;
+
+			.board-turn {
+				display: none;
+			}
+
+			.board {
+				.minion-container {
+					margin-right: 5px;
+
+					li {
+						width: 58px;
+						height: 85px;
+					}
+
+					.card-stats {
+						.stat {
+							width: 30px;
+							height: 30px;
+
+							&.attack {
+								left: -4px;
+								top: -7px;
+							}
+
+							&.health {
+								right: -4px;
+								left: auto;
+								top: -7px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.stats {
+		display: flex;
+		align-items: center;
+
+		.stat {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+
+			.label {
+				font-size: 12px;
+			}
+
+			.value {
+				font-size: 20px;
+				color: var(--default-title-color);
+			}
+		}
+	}
+}

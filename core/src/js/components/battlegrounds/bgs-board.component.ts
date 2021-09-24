@@ -110,8 +110,8 @@ export class BgsBoardComponent implements AfterViewInit, OnDestroy {
 
 	@Input('entities') set entities(value: readonly Entity[]) {
 		this.inputEntities = value || [];
-
 		this._entities = this.inputEntities.map((entity) => Entity.create({ ...entity } as Entity));
+		console.debug('setting entities', value, this._entities);
 		this.previousBoardWidth = undefined;
 		this.boardReady = false;
 		this.onResize();
