@@ -23,6 +23,7 @@ import { ApiRunner } from '../api-runner';
 import { Events } from '../events.service';
 import { FeatureFlags } from '../feature-flags';
 import { OverwolfService } from '../overwolf.service';
+import centroidDefinitions from './centroids-definition.json';
 import compositions from './compositions.json';
 import { BgsStatUpdateEvent } from './store/events/bgs-stat-update-event';
 import { BattlegroundsStoreEvent } from './store/events/_battlegrounds-store-event';
@@ -47,7 +48,7 @@ export class BgsInitService {
 		setTimeout(() => {
 			this.bgsStateUpdater = this.ow.getMainWindow().battlegroundsUpdater;
 		});
-		window['reloadCompositions'] = () => this.loadCompositions();
+		window['reloadCompositions'] = (sensitivy: number) => this.loadCompositions(sensitivy);
 	}
 
 	public async loadPerfectGames(): Promise<readonly GameStat[]> {
@@ -66,12 +67,23 @@ export class BgsInitService {
 			.filter((stat) => stat.playerRank);
 	}
 
-	public async loadCompositions(): Promise<readonly BgsCompositionStat[]> {
+	public async loadCompositions(sensitity = 1): Promise<readonly BgsCompositionStat[]> {
 		console.debug('starting reload');
 		const compositionsFromService: readonly CompositionsFromRemote[] =
-			(await this.api.callGetApi('./compositions.json')) ?? (compositions as readonly CompositionsFromRemote[]);
+			(await this.api.callGetApi('./compositions.json?v=2')) ?? compositions;
+		const centroids: { [key: string]: number } =
+			(await this.api.callGetApi('./centroid-definitions.json')) ?? centroidDefinitions;
 		const result = this.transformCompositions(compositionsFromService[0]);
 		console.debug('[bgs-init] loaded compositions', result);
+		const merged: readonly BgsCompositionStat[] = this.mergeCompositions(result, centroids, sensitity);
+		return merged;
+	}
+
+	private mergeCompositions(
+		result: readonly BgsCompositionStat[],
+		centroids: { [key: string]: number },
+		sensitity: number,
+	): readonly BgsCompositionStat[] {
 		return result;
 	}
 
@@ -155,7 +167,7 @@ export class BgsInitService {
 	}
 
 	private transformCompositions(compositionsFromService: CompositionsFromRemote): readonly BgsCompositionStat[] {
-		return compositionsFromService.final_builds
+		return compositionsFromService.round_builds
 			.map((build) => {
 				const cards = this.buildCards(build.common_cards);
 				return {
@@ -167,7 +179,7 @@ export class BgsInitService {
 					// For now we hardcode this
 					mmrPercentile: 100,
 					cards: cards,
-					buildExamples: this.buildBuildExamples(build.top_10_build_stats, cards),
+					buildExamples: this.buildBuildExamples(build.top_10_build_stats, cards, build),
 				};
 			})
 			.filter((comp) => !!comp.buildExamples.length)
@@ -177,19 +189,18 @@ export class BgsInitService {
 	private buildBuildExamples(
 		builds: { [jsonStr: string]: Stat },
 		cards: readonly BgsCompositionStatCard[],
+		finalBuild: any,
 	): readonly BgsCompositionStatBuildExample[] {
+		const debug = finalBuild.cluster === 18;
 		const refCardIds = cards.map((card) => card.cardId);
 		return Object.keys(builds)
 			.map((identifier) => {
 				const idObj = JSON.parse(identifier);
 				const cardIds = this.extractCardIds(idObj);
 				if (!cardIds.every((id) => refCardIds.includes(id))) {
-					// console.warn(
-					// 	'missing reference cards',
-					// 	cardIds.filter((id) => refCardIds.includes(id)).length,
-					// 	cardIds.filter((id) => !refCardIds.includes(id)),
-					// 	cardIds.filter((id) => refCardIds.includes(id)),
-					// );
+					if (debug) {
+						console.warn('missing reference cards', cardIds, refCardIds, cards, idObj, finalBuild);
+					}
 					return null;
 				}
 				const build = builds[identifier];
@@ -241,6 +252,7 @@ export class BgsInitService {
 
 interface CompositionsFromRemote {
 	readonly final_builds: readonly FinalBuild[];
+	readonly round_builds: readonly FinalBuild[];
 }
 
 interface FinalBuild {
