@@ -86,74 +86,92 @@ export class MemoryInspectionService {
 	}
 
 	public async getMemoryChanges(): Promise<MemoryUpdate> {
+		this.debug('getMemoryChanges');
 		return this.getMemoryChangesOperation.call();
 	}
 
 	public async getCollection(): Promise<readonly Card[]> {
+		this.debug('getCollection');
 		return this.getCollectionOperation.call();
 	}
 
 	public async getCardBacks(): Promise<readonly CardBack[]> {
+		this.debug('getCardBacks');
 		return this.getCardBacksOperation.call();
 	}
 
 	public async getCoins(): Promise<readonly CoinInfo[]> {
+		this.debug('getCoins');
 		return this.getCoinsOperation.call();
 	}
 
 	public async getMatchInfo(): Promise<MatchInfo> {
+		this.debug('getMatchInfo');
 		return this.getMatchInfoOperation.call();
 	}
 
 	public async getBattlegroundsInfo(numberOfRetries?: number): Promise<BattlegroundsInfo> {
+		this.debug('getBattlegroundsInfo');
 		return this.getBattlegroundsInfoOperation.call(numberOfRetries);
 	}
 
 	public async getMercenariesInfo(numberOfRetries?: number): Promise<MemoryMercenariesInfo> {
+		this.debug('getMercenariesInfo');
 		return this.getMercenariesInfoOperation.call(numberOfRetries);
 	}
 
 	public async getMercenariesCollectionInfo(numberOfRetries?: number): Promise<MemoryMercenariesCollectionInfo> {
+		this.debug('getMercenariesCollectionInfo');
 		return this.getMercenariesCollectionInfoOperation.call(numberOfRetries);
 	}
 
 	public async getBattlegroundsEndGame(numberOfRetries?: number): Promise<BattlegroundsInfo> {
+		this.debug('getBattlegroundsEndGame');
 		return this.getBattlegroundsEndGameOperation.call(numberOfRetries);
 	}
 
 	public async getBattlegroundsMatchWithPlayers(numberOfRetries?: number): Promise<BattlegroundsInfo> {
+		this.debug('getBattlegroundsMatchWithPlayers');
 		return this.getBattlegroundsMatchOperation.call(numberOfRetries);
 	}
 
 	public async getActiveDeck(selectedDeckId: number, numberOfRetries: number): Promise<DeckInfoFromMemory> {
+		this.debug('getActiveDeck');
 		return this.getActiveDeckOperation.call(numberOfRetries, false, selectedDeckId);
 	}
 
 	public async getWhizbangDeck(deckId: number): Promise<DeckInfoFromMemory> {
+		this.debug('getWhizbangDeck');
 		return this.getWhizbangDeckOperation.call(2, false, deckId);
 	}
 
 	public async getArenaInfo(): Promise<ArenaInfo> {
+		this.debug('getArenaInfo');
 		return this.getArenaInfoOperation.call();
 	}
 
 	public async getDuelsInfo(forceReset = false, numberOfRetries = 1): Promise<DuelsInfo> {
+		this.debug('getDuelsInfo');
 		return this.getDuelsInfoOperation.call(numberOfRetries, forceReset);
 	}
 
 	public async getDuelsRewardsInfo(forceReset = false): Promise<DuelsRewardsInfo> {
+		this.debug('getDuelsRewardsInfo');
 		return this.getDuelsRewardsInfoOperation.call(1, forceReset);
 	}
 
 	public async getRewardsTrackInfo(): Promise<RewardsTrackInfo> {
+		this.debug('getRewardsTrackInfo');
 		return this.getRewardsTrackInfoOperation.call();
 	}
 
 	public async getAchievementsInfo(forceReset = false, numberOfRetries = 1): Promise<HsAchievementsInfo> {
+		this.debug('getAchievementsInfo');
 		return this.getAchievementsInfoOperation.call(numberOfRetries, forceReset);
 	}
 
 	public async getBoostersInfo(): Promise<readonly PackInfo[]> {
+		this.debug('getBoostersInfo');
 		return this.getBoostersInfoOperation.call();
 	}
 
@@ -161,26 +179,35 @@ export class MemoryInspectionService {
 		forceReset = false,
 		numberOfRetries = 2,
 	): Promise<HsAchievementsInfo> {
+		this.debug('getInGameAchievementsProgressInfo');
 		return this.getInGameAchievementsProgressInfoOperation.call(numberOfRetries, forceReset);
 	}
 
 	public async getCurrentSceneFromMindVision(): Promise<SceneMode> {
+		this.debug('getCurrentSceneFromMindVision');
 		return this.getCurrentSceneOperation.call();
 	}
 
 	public async isMaybeOnDuelsRewardsScreen(): Promise<boolean> {
+		this.debug('isMaybeOnDuelsRewardsScreen');
 		return this.isMaybeOnDuelsRewardsScreenOperation.call();
 	}
 
 	public async reset(): Promise<void> {
+		this.debug('reset');
 		await this.mindVision.reset();
 	}
 
-	public async getCurrentScene(): Promise<string> {
-		return new Promise<string>(async (resolve) => {
-			const gameInfo = await this.ow.getGameEventsInfo();
+	// public async getCurrentScene(): Promise<string> {
+	// 	this.debug('getCurrentScene');
+	// 	return new Promise<string>(async (resolve) => {
+	// 		const gameInfo = await this.ow.getGameEventsInfo();
 
-			resolve(gameInfo?.res?.game_info?.scene_state);
-		});
+	// 		resolve(gameInfo?.res?.game_info?.scene_state);
+	// 	});
+	// }
+
+	private debug(...args) {
+		console.debug('[memory-service] calling', ...args, new Error().stack);
 	}
 }

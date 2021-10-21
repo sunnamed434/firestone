@@ -98,23 +98,16 @@ export class EndGameUploaderService {
 		// Get the memory info first, because parsing the XML can take some time and make the
 		// info in memory stale / unavailable
 		console.log('[manastorm-bridge]', currentReviewId, 'reading memory info');
-		const [
-			battlegroundsInfo,
-			mercenariesInfo,
-			duelsInfo,
-			arenaInfo,
-			playerInfo,
-			opponentInfo,
-			xpForGame,
-		] = await Promise.all([
+		const [battlegroundsInfo, mercenariesInfo, duelsInfo, arenaInfo, matchInfo, xpForGame] = await Promise.all([
 			game.gameMode === 'battlegrounds' ? this.getBattlegroundsEndGame(currentReviewId) : null,
 			isMercenaries(game.gameMode) ? this.getMercenariesInfo(currentReviewId) : null,
 			game.gameMode === 'duels' || game.gameMode === 'paid-duels' ? this.memoryInspection.getDuelsInfo() : null,
 			game.gameMode === 'arena' ? this.memoryInspection.getArenaInfo() : null,
-			this.playersInfo.getPlayerInfo(),
-			this.playersInfo.getOpponentInfo(),
+			this.memoryInspection.getMatchInfo(),
 			this.rewards.getXpForGameInfo(),
 		]);
+		const playerInfo = matchInfo?.localPlayer;
+		const opponentInfo = matchInfo?.opponent;
 		console.log('[manastorm-bridge]', currentReviewId, 'read memory info');
 
 		const replay = parseHsReplayString(replayXml);
