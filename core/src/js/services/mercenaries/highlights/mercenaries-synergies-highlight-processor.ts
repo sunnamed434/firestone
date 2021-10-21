@@ -40,6 +40,12 @@ export const buildSelector = (cardId: string, allCards: CardsFacadeService): Hig
 		case CardIds.BlessingOfTheMoon4Lettuce:
 		case CardIds.BlessingOfTheMoon5Lettuce:
 			return or(nightelf, tauren, troll);
+		case CardIds.BloodPact1Lettuce:
+		case CardIds.BloodPact2Lettuce:
+		case CardIds.BloodPact3Lettuce:
+		case CardIds.BloodPact4Lettuce:
+		case CardIds.BloodPact5Lettuce:
+			return or(orc, demon);
 		case CardIds.DarkShamanCowl1Lettuce:
 		case CardIds.DarkShamanCowl2Lettuce:
 		case CardIds.DarkShamanCowl3Lettuce:
@@ -62,6 +68,12 @@ export const buildSelector = (cardId: string, allCards: CardsFacadeService): Hig
 		case CardIds.EnchantedRaven2Lettuce:
 		case CardIds.EnchantedRaven3Lettuce:
 			return arcane;
+		case CardIds.FelStaff1Lettuce:
+		case CardIds.FelStaff1Lettuce:
+		case CardIds.FelStaff1Lettuce:
+		case CardIds.FelStaff1Lettuce:
+		case CardIds.FelStaff1Lettuce:
+			return fel;
 		case CardIds.FlameBuffet1Lettuce:
 		case CardIds.FlameBuffet2Lettuce:
 		case CardIds.FlameBuffet3Lettuce:
@@ -168,6 +180,18 @@ export const buildSelector = (cardId: string, allCards: CardsFacadeService): Hig
 		case CardIds.StrengthOfWrynn4Lettuce:
 		case CardIds.StrengthOfWrynn5Lettuce:
 			return human;
+		case CardIds.TempestsFuryILettuce:
+		case CardIds.TempestsFuryIiLettuce:
+		case CardIds.TempestsFuryIiiLettuce:
+		case CardIds.TempestsFuryIvLettuce:
+		case CardIds.TempestsFuryVLettuce:
+			return and(nature, dealsDamage);
+		case CardIds.TheBeastWithin1Lettuce:
+		case CardIds.TheBeastWithin2Lettuce:
+		case CardIds.TheBeastWithin3Lettuce:
+		case CardIds.TheBeastWithin4Lettuce:
+		case CardIds.TheBeastWithin5Lettuce:
+			return beast;
 		case CardIds.TribalWarfare1Lettuce:
 		case CardIds.TribalWarfare2Lettuce:
 		case CardIds.TribalWarfare3Lettuce:
@@ -214,6 +238,7 @@ const dragon = (card: ReferenceCard) => race(card, Race.DRAGON);
 const murloc = (card: ReferenceCard) => race(card, Race.MURLOC);
 const elemental = (card: ReferenceCard) => race(card, Race.ELEMENTAL);
 const beast = (card: ReferenceCard) => race(card, Race.BEAST);
+const demon = (card: ReferenceCard) => race(card, Race.DEMON);
 
 const spellSchool = (card: ReferenceCard, spellSchool: SpellSchool) =>
 	SpellSchool[spellSchool] === card.spellSchool?.toUpperCase();
@@ -222,6 +247,7 @@ const fire = (card: ReferenceCard) => spellSchool(card, SpellSchool.FIRE);
 const holy = (card: ReferenceCard) => spellSchool(card, SpellSchool.HOLY);
 const nature = (card: ReferenceCard) => spellSchool(card, SpellSchool.NATURE);
 const frost = (card: ReferenceCard) => spellSchool(card, SpellSchool.FROST);
+const fel = (card: ReferenceCard) => spellSchool(card, SpellSchool.FEL);
 
 const hasText = (card: ReferenceCard, text: RegExp) => !!card.text?.match(text);
 const dealsDamage = (card: ReferenceCard) => hasText(card, /deal \d+ damage/);
