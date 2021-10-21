@@ -28,6 +28,18 @@ export const buildSelector = (cardId: string, allCards: CardsFacadeService): Hig
 		case CardIds.BannerOfTheHorde4Lettuce:
 		case CardIds.BannerOfTheHorde5Lettuce:
 			return horde;
+		case CardIds.BestialWrath1Lettuce:
+		case CardIds.BestialWrath2Lettuce:
+		case CardIds.BestialWrath3Lettuce:
+		case CardIds.BestialWrath4Lettuce:
+		case CardIds.BestialWrath5Lettuce:
+			return beast;
+		case CardIds.BlessingOfTheMoon1Lettuce:
+		case CardIds.BlessingOfTheMoon2Lettuce:
+		case CardIds.BlessingOfTheMoon3Lettuce:
+		case CardIds.BlessingOfTheMoon4Lettuce:
+		case CardIds.BlessingOfTheMoon5Lettuce:
+			return or(nightelf, tauren, troll);
 		case CardIds.DarkShamanCowl1Lettuce:
 		case CardIds.DarkShamanCowl2Lettuce:
 		case CardIds.DarkShamanCowl3Lettuce:
@@ -39,7 +51,7 @@ export const buildSelector = (cardId: string, allCards: CardsFacadeService): Hig
 		case CardIds.ElementaryStudies3Lettuce:
 		case CardIds.ElementaryStudies4Lettuce:
 		case CardIds.ElementaryStudies5Lettuce:
-			return or(human, elemental);
+			return or(human, elemental, and(fire, dealsDamage));
 		case CardIds.ElvenBanner1Lettuce:
 		case CardIds.ElvenBanner2Lettuce:
 		case CardIds.ElvenBanner3Lettuce:
@@ -68,6 +80,12 @@ export const buildSelector = (cardId: string, allCards: CardsFacadeService): Hig
 		case CardIds.ForTheFin4Lettuce:
 		case CardIds.ForTheFin5Lettuce:
 			return murloc;
+		case CardIds.FrostStaff1Lettuce:
+		case CardIds.FrostStaff2Lettuce:
+		case CardIds.FrostStaff3Lettuce:
+		case CardIds.FrostStaff4Lettuce:
+		case CardIds.FrostStaff5Lettuce:
+			return frost;
 		case CardIds.HeroicLeap1Lettuce:
 		case CardIds.HeroicLeap2Lettuce:
 		case CardIds.HeroicLeap3Lettuce:
@@ -80,6 +98,18 @@ export const buildSelector = (cardId: string, allCards: CardsFacadeService): Hig
 		case CardIds.HolyWordSalvation4Lettuce:
 		case CardIds.HolyWordSalvation5Lettuce:
 			return human;
+		case CardIds.HuntingParty1Lettuce:
+		case CardIds.HuntingParty2Lettuce:
+		case CardIds.HuntingParty3Lettuce:
+		case CardIds.HuntingParty4Lettuce:
+		case CardIds.HuntingParty5Lettuce:
+			return beast;
+		case CardIds.InfernalCombustion1Lettuce:
+		case CardIds.InfernalCombustion2Lettuce:
+		case CardIds.InfernalCombustion3Lettuce:
+		case CardIds.InfernalCombustion4Lettuce:
+		case CardIds.InfernalCombustion5Lettuce:
+			return and(fire, dealsDamage);
 		case CardIds.Inferno1Lettuce:
 		case CardIds.Inferno2Lettuce:
 		case CardIds.Inferno3Lettuce:
@@ -183,6 +213,7 @@ const alliance = or(human, dwarf, gnome, nightelf, draenei);
 const dragon = (card: ReferenceCard) => race(card, Race.DRAGON);
 const murloc = (card: ReferenceCard) => race(card, Race.MURLOC);
 const elemental = (card: ReferenceCard) => race(card, Race.ELEMENTAL);
+const beast = (card: ReferenceCard) => race(card, Race.BEAST);
 
 const spellSchool = (card: ReferenceCard, spellSchool: SpellSchool) =>
 	SpellSchool[spellSchool] === card.spellSchool?.toUpperCase();
@@ -190,6 +221,7 @@ const arcane = (card: ReferenceCard) => spellSchool(card, SpellSchool.ARCANE);
 const fire = (card: ReferenceCard) => spellSchool(card, SpellSchool.FIRE);
 const holy = (card: ReferenceCard) => spellSchool(card, SpellSchool.HOLY);
 const nature = (card: ReferenceCard) => spellSchool(card, SpellSchool.NATURE);
+const frost = (card: ReferenceCard) => spellSchool(card, SpellSchool.FROST);
 
 const hasText = (card: ReferenceCard, text: RegExp) => !!card.text?.match(text);
 const dealsDamage = (card: ReferenceCard) => hasText(card, /deal \d+ damage/);
