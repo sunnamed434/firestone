@@ -35,7 +35,7 @@ import { CardsFacadeService } from '../../../../services/cards-facade.service';
 			</div>
 			<div
 				class="item ability-speed"
-				[ngClass]="{ 'buff': speedModifier?.value < 0, 'debuff': speedModifier?.value > 0 }"
+				[ngClass]="{ 'buff': speed < baseSpeed, 'debuff': speed > baseSpeed }"
 				*ngIf="speed != null"
 			>
 				<div class="value" [helpTooltip]="speedModifierTooltip">{{ speed }}</div>
@@ -74,10 +74,11 @@ export class MercenariesTeamAbilityComponent {
 
 	@Input() set ability(value: Ability) {
 		console.debug('set ability', this.allCards.getCard(value.cardId).name, value);
+		const abilityCard = this.allCards.getCard(value.cardId);
 		this.type = value.type;
 		this.cardId = value.cardId;
 		this.cardImage = value.cardImage;
-		this.name = this.allCards.getCard(value.cardId).name;
+		this.name = abilityCard.name;
 		this.cooldown = value.cooldown;
 		this.cooldownLeft = value.cooldownLeft;
 		this.isTreasure = value.isTreasure;
@@ -92,11 +93,12 @@ export class MercenariesTeamAbilityComponent {
 						],
 				  }
 				: null;
-		this.speed = value.speed == null ? null : value.speed + (this.speedModifier?.value ?? 0);
+		this.speed = value.speed; // value.speed == null ? null : value.speed + (this.speedModifier?.value ?? 0);
+		this.baseSpeed = abilityCard.cost;
 		this.speedModifierTooltip = !!this.speedModifier?.value
-			? this.speedModifier.value > 0
-				? `This ability will be ${this.speedModifier.value} slower next turn`
-				: `This ability will be ${-this.speedModifier.value} faster next turn`
+			? this.speed > this.baseSpeed
+				? `This ability will be ${this.speed - this.baseSpeed} slower next turn`
+				: `This ability will be ${-(this.speed - this.baseSpeed)} faster next turn`
 			: null;
 	}
 
@@ -104,6 +106,7 @@ export class MercenariesTeamAbilityComponent {
 	cardId: string;
 	cardImage: string;
 	name: string;
+	baseSpeed: number;
 	speed: number;
 	cooldown: number;
 	cooldownLeft: number;

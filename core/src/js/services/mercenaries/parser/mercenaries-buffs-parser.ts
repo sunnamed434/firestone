@@ -73,6 +73,7 @@ export class MercenariesBuffsParser implements MercenariesParser {
 					console.warn('could not find player ability', ability, playerAbilities);
 				}
 				return ability.update({
+					speed: playerAbility.tags.find((tag) => tag.Name === GameTag.COST)?.Value ?? ability.speed,
 					speedModifier: this.buildSpeedModifier(playerAbility),
 				});
 			});
