@@ -95,102 +95,68 @@ export class LogListenerService {
 	async listenOnFileUpdate(logsLocation: string) {
 		const fileIdentifier = this.logFile;
 		console.log('[log-listener] [' + this.logFile + '] preparing to listen on file update', logsLocation);
-		let lastLineIsNew = true;
 
 		try {
-			let hasFileBeenInitiallyRead = false;
+			// let hasFileBeenInitiallyRead = false;
 
-			const existingLines: string[] = [];
+			// const existingLines: string[] = [];
 
 			const skipToEnd = true; // this.fileInitiallyPresent && !this.existingLineHandler;
 			const options = {
 				skipToEnd: skipToEnd,
 			};
-			const handler = (lineInfo: ListenObject) => {
-				if (!lineInfo.success) {
-					console.warn(
-						'[log-listener] [' + this.logFile + '] received an error on file: ',
-						fileIdentifier,
-						lineInfo.error,
-					);
-					return;
-				}
-				if (lineInfo.state === 'truncated') {
-					console.log(
-						'[log-listener] [' +
-							this.logFile +
-							'] truncated log file - HS probably just overwrote the file. Restarting listening',
-					);
-					this.callback('truncated');
-					this.ow.listenOnFile(fileIdentifier, logsLocation, options, handler);
-					return;
-				}
-				const info: {
-					readonly index: number;
-					readonly isNew: boolean;
-					readonly position: number;
-					readonly oef: boolean;
-				} = lineInfo.info ? JSON.parse(lineInfo.info) : null;
-
-				if (info && !info.isNew) {
-					lastLineIsNew = false;
-					if (this.existingLineHandler) {
-						this.existingLineHandler(lineInfo.content);
-					}
-				} else {
-					if (!lastLineIsNew && this.existingLineHandler) {
-						lastLineIsNew = true;
-						console.log(
-							'[log-listener] [' + this.logFile + '] finished catching up with existing data',
-							info,
-							lineInfo,
-							lastLineIsNew,
-						);
-						this.existingLineHandler('end_of_existing_data');
-					}
-					if (!hasFileBeenInitiallyRead) {
-						existingLines.push(lineInfo.content);
-					} else {
-						this.callback(lineInfo.content);
-					}
-				}
-			};
-
-			this.ow.listenOnFile(fileIdentifier, logsLocation, options, handler);
+			this.ow.listenOnFile(fileIdentifier, logsLocation, options, (lineInfo) => this.handleLine(lineInfo));
 			console.log('[log-listener] [' + this.logFile + '] listening on file update', logsLocation);
 
 			// Load the existing file in memory
 			const existingFileContents = await this.ow.readTextFile(logsLocation);
-			const lines = existingFileContents?.split('\n') ?? [];
-			console.log('[log-listener] [' + this.logFile + '] catching up existing', lines?.length);
-			if (!!lines?.length && !!this.existingLineHandler) {
-				for (const line of lines) {
-					this.existingLineHandler(line);
-				}
-				this.existingLineHandler('end_of_existing_data');
-			}
-			hasFileBeenInitiallyRead = true;
-
-			// const plugin = await this.io.get();
-			// plugin.onFileListenerChanged.addListener(handler);
-
-			// plugin.listenOnFile(
-			// 	fileIdentifier,
-			// 	logsLocation,
-			// 	skipToEnd,
-			// 	(id: string, status: boolean, initData: any) => {
-			// 		if (id === fileIdentifier) {
-			// 			if (status) {
-			// 				console.log('[' + id + '] now streaming...', this.fileInitiallyPresent, initData);
-			// 				this.subject.next(Events.STREAMING_LOG_FILE);
-			// 			} else {
-			// 				console.error('[log-listener] [' + this.logFile + '] something bad happened with: ', id);
-			// 			}
-			// 		}
-			// 	},
-			// );
+			const lines: readonly string[] = existingFileContents?.split('\n') ?? [];
+			this.catchUpLines(lines);
+			// hasFileBeenInitiallyRead = true;
 		} catch (e) {
 			console.error('Exception while listener on logs', fileIdentifier, e);
+		}
+	}
+
+	private catchUpLines(lines: readonly string[]) {
+		console.log('[log-listener] [' + this.logFile + '] catching up existing', lines?.length);
+		if (!!lines?.length && !!this.existingLineHandler) {
+			for (const line of lines) {
+				this.existingLineHandler(line);
+			}
+			this.existingLineHandler('end_of_existing_data');
+		}
+	}
+
+	private handleLine(lineInfo: ListenObject) {
+		if (!lineInfo.success) {
+			console.warn(
+				'[log-listener] [' + this.logFile + '] received an error on file: ',
+				// fileIdentifier,
+				lineInfo.error,
+			);
+			return;
+		}
+		// if (lineInfo.state === 'truncated') {
+		// 	console.log(
+		// 		'[log-listener] [' +
+		// 			logFile +
+		// 			'] truncated log file - HS probably just overwrote the file. Restarting listening',
+		// 	);
+		// 	callback('truncated');
+		// 	this.ow.listenOnFile(fileIdentifier, logsLocation, options, handler);
+		// 	return;
+		// }
+		const info: {
+			readonly index: number;
+			readonly isNew: boolean;
+			readonly position: number;
+			readonly oef: boolean;
+		} = lineInfo.info ? JSON.parse(lineInfo.info) : null;
+
+		if (info && !info.isNew) {
+		} else {
+			this.callback(lineInfo.content);
 		}
 	}
 }

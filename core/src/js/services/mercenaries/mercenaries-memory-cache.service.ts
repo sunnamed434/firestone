@@ -8,11 +8,26 @@ import { LOCAL_STORAGE_MERCENARIES_COLLECTION } from '../local-storage';
 import { MemoryInspectionService } from '../plugins/memory-inspection.service';
 import { PreferencesService } from '../preferences.service';
 import { sleep } from '../utils';
-import { SCENE_WITH_RELEVANT_MERC_INFO } from './out-of-combat/parser/mercenaries-memory-information-parser';
+
+export const SCENE_WITH_RELEVANT_MERC_INFO = [
+	SceneMode.GAMEPLAY,
+	SceneMode.LETTUCE_BOUNTY_BOARD,
+	SceneMode.LETTUCE_BOUNTY_TEAM_SELECT,
+	SceneMode.LETTUCE_MAP,
+	// SceneMode.LETTUCE_COLLECTION,
+	// SceneMode.LETTUCE_COOP,
+	// SceneMode.LETTUCE_FRIENDLY,
+	// SceneMode.LETTUCE_PACK_OPENING,
+	// SceneMode.LETTUCE_PLAY,
+	// SceneMode.LETTUCE_VILLAGE,
+];
 
 @Injectable()
 export class MercenariesMemoryCacheService {
 	public memoryCollectionInfo$ = new Subject<MemoryMercenariesCollectionInfo>();
+
+	private previousScene: SceneMode;
+	private lastRefreshTimestamp: number;
 
 	constructor(
 		private readonly memoryService: MemoryInspectionService,
@@ -26,7 +41,7 @@ export class MercenariesMemoryCacheService {
 		this.events.on(Events.MEMORY_UPDATE).subscribe(async (event) => {
 			const changes: MemoryUpdate = event.data[0];
 			const newScene = changes.CurrentScene;
-			if (!SCENE_WITH_RELEVANT_MERC_INFO.includes(newScene)) {
+			if (!this.shouldRefreshMemoryInfo(newScene)) {
 				return;
 			}
 			console.debug('[merc-memory] changing scene, refreshing merc info', newScene, SceneMode[newScene]);
@@ -35,6 +50,27 @@ export class MercenariesMemoryCacheService {
 			const newMercenariesInfo = await this.getMercenariesCollectionInfo();
 			this.memoryCollectionInfo$.next(newMercenariesInfo);
 		});
+	}
+
+	public shouldRefreshMemoryInfo(newScene: SceneMode): boolean {
+		if (!SCENE_WITH_RELEVANT_MERC_INFO.includes(newScene)) {
+			this.previousScene = null;
+			return false;
+		}
+
+		if (newScene === SceneMode.GAMEPLAY && !this.previousScene) {
+			console.debug('[merc-memory] getting in gameplay from a non-merc scene');
+			return false;
+		}
+
+		if (this.lastRefreshTimestamp && Date.now() - this.lastRefreshTimestamp < 5000) {
+			console.debug('[merc-memory] skipping refresh, too soon');
+			return false;
+		}
+
+		this.previousScene = newScene;
+		this.lastRefreshTimestamp = Date.now();
+		return true;
 	}
 
 	public async getMercenariesCollectionInfo(): Promise<MemoryMercenariesCollectionInfo> {

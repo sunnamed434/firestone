@@ -32,6 +32,7 @@ export class MindVisionService {
 	}
 
 	private async init() {
+		return null;
 		const inGame = await this.ow.inGame();
 		if (inGame) {
 			this.initialize();
@@ -100,6 +101,7 @@ export class MindVisionService {
 
 	public async getMemoryChanges(): Promise<MemoryUpdate> {
 		this.debug('getMemoryChanges');
+		return null;
 		return new Promise<MemoryUpdate>(async (resolve, reject) => {
 			const plugin = await this.get();
 			try {
@@ -115,6 +117,7 @@ export class MindVisionService {
 
 	public async getCollection(): Promise<any[]> {
 		this.debug('getCollection');
+		return null;
 		return new Promise<any[]>(async (resolve, reject) => {
 			const plugin = await this.get();
 			try {
@@ -130,6 +133,7 @@ export class MindVisionService {
 
 	public async getCardBacks(): Promise<any[]> {
 		this.debug('getCardBacks');
+		return null;
 		return new Promise<any[]>(async (resolve, reject) => {
 			const plugin = await this.get();
 			try {
@@ -145,6 +149,7 @@ export class MindVisionService {
 
 	public async getCoins(): Promise<CoinInfo[]> {
 		this.debug('getCoins');
+		return null;
 		return new Promise<CoinInfo[]>(async (resolve, reject) => {
 			const plugin = await this.get();
 			try {
@@ -160,6 +165,7 @@ export class MindVisionService {
 
 	public async getMatchInfo(): Promise<any> {
 		this.debug('getMatchInfo');
+		return null;
 		return new Promise<any[]>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -175,6 +181,7 @@ export class MindVisionService {
 
 	public async getDuelsInfo(forceReset = false): Promise<any> {
 		this.debug('getDuelsInfo');
+		return null;
 		return new Promise<any[]>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -190,6 +197,7 @@ export class MindVisionService {
 
 	public async getBattlegroundsInfo(forceReset = false): Promise<{ Rating: number }> {
 		this.debug('getBattlegroundsInfo');
+		return null;
 		return new Promise<{ Rating: number }>(async (resolve) => {
 			if (forceReset) {
 			}
@@ -207,6 +215,7 @@ export class MindVisionService {
 
 	public async getMercenariesInfo(forceReset = false): Promise<MemoryMercenariesInfo> {
 		this.debug('getMercenariesInfo');
+		return null;
 		return new Promise<MemoryMercenariesInfo>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -222,6 +231,7 @@ export class MindVisionService {
 
 	public async getMercenariesCollectionInfo(forceReset = false): Promise<MemoryMercenariesCollectionInfo> {
 		this.debug('getMercenariesCollectionInfo');
+		return null;
 		return new Promise<MemoryMercenariesCollectionInfo>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -237,6 +247,7 @@ export class MindVisionService {
 
 	public async getArenaInfo(): Promise<ArenaInfo> {
 		this.debug('getArenaInfo');
+		return null;
 		return new Promise<ArenaInfo>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -252,6 +263,7 @@ export class MindVisionService {
 
 	public async getActiveDeck(selectedDeckId: number): Promise<any> {
 		this.debug('getActiveDeck');
+		return null;
 		return new Promise<any[]>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -267,6 +279,7 @@ export class MindVisionService {
 
 	public async getWhizbangDeck(deckId: number): Promise<any> {
 		this.debug('getWhizbangDeck');
+		return null;
 		return new Promise<any[]>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -282,6 +295,7 @@ export class MindVisionService {
 
 	public async getRewardsTrackInfo(): Promise<RewardsTrackInfo> {
 		this.debug('getRewardsTrackInfo');
+		return null;
 		return new Promise<RewardsTrackInfo>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -297,6 +311,7 @@ export class MindVisionService {
 
 	public async getDuelsRewardsInfo(forceReset = false): Promise<DuelsRewardsInfo> {
 		this.debug('getDuelsRewardsInfo');
+		return null;
 		return new Promise<DuelsRewardsInfo>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -312,6 +327,7 @@ export class MindVisionService {
 
 	public async getAchievementsInfo(forceReset = false): Promise<InternalHsAchievementsInfo> {
 		this.debug('getAchievementsInfo');
+		return null;
 		return new Promise<InternalHsAchievementsInfo>(async (resolve, reject) => {
 			const plugin = await this.get();
 			try {
@@ -327,6 +343,7 @@ export class MindVisionService {
 
 	public async getInGameAchievementsProgressInfo(forceReset = false): Promise<InternalHsAchievementsInfo> {
 		this.debug('getInGameAchievementsProgressInfo');
+		return null;
 		return new Promise<InternalHsAchievementsInfo>(async (resolve, reject) => {
 			const plugin = await this.get();
 			try {
@@ -342,6 +359,7 @@ export class MindVisionService {
 
 	public async getCurrentScene(): Promise<number> {
 		this.debug('getCurrentScene');
+		return null;
 		return new Promise<number>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -357,6 +375,7 @@ export class MindVisionService {
 
 	public async getBoostersInfo(): Promise<BoostersInfo> {
 		this.debug('getBoostersInfo');
+		return null;
 		return new Promise<BoostersInfo>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -372,6 +391,7 @@ export class MindVisionService {
 
 	public async isMaybeOnDuelsRewardsScreen(): Promise<boolean> {
 		this.debug('isMaybeOnDuelsRewardsScreen');
+		return null;
 		return new Promise<boolean>(async (resolve) => {
 			const plugin = await this.get();
 			try {
@@ -389,6 +409,7 @@ export class MindVisionService {
 	// initialization, to be sure we refresh the plugins once the memory is
 	// properly populated
 	public async reset(): Promise<void> {
+		return null;
 		this.debug('getMemoryChanges');
 		return new Promise<void>(async (resolve) => {
 			const plugin = await this.get();
@@ -406,6 +427,7 @@ export class MindVisionService {
 
 	public async resetListening(): Promise<void> {
 		this.debug('resetListening');
+		return null;
 		return new Promise<void>(async (resolve) => {
 			const plugin = await this.get();
 			try {
