@@ -1,4 +1,4 @@
-import { enableProdMode, NgModuleRef, PlatformRef, TestabilityRegistry } from '@angular/core';
+import { enableProdMode, NgModuleRef, PlatformRef } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './background.module';
 
@@ -13,23 +13,28 @@ declare var window: any;
 // this has to bee the unique tag name of the angular app
 const ROOT_NODE = 'game-counters';
 
+window['destroyPlatform'] = () => {
+	platform?.destroy();
+	platform = null;
+};
+
 window['removeScripts'] = () => {
-	// document.body.getElementsByTagName('script')[1].remove();
-	// document.body.innerHTML = '';
 	document.body.textContent = '';
 };
 
 window.addEventListener('beforeunload', () => {
-	console.log('on beforeunload');
-	tearDown();
+	// console.log('on beforeunload');
+	// tearDown();
 	// document.body.textContent = '';
 	// delete window.webpackJsonp;
 	// console.log('emptied text content');
 });
 
 window.addEventListener('unload', () => {
-	// console.log('on unload');
-	// tearDown();
+	console.log('on unload');
+	// syncSleep(5000);
+	// console.log('on unload after sleep');
+	tearDown();
 	// document.body.textContent = '';
 	// delete window.webpackJsonp;
 	// console.log('emptied text content');
@@ -97,23 +102,22 @@ platformBrowserDynamic()
 
 const tearDown = (observer?) => {
 	console.log('NG: Root node was removed. Destroying app.');
-	// https://github.com/angular/angular/issues/17637
-	if (!!platform) {
-		const testabilityRegistry: TestabilityRegistry = platform.injector.get(TestabilityRegistry);
-		(<any>testabilityRegistry)._applications.clear();
+	// // https://github.com/angular/angular/issues/17637
+	// if (!!platform) {
+	// 	const testabilityRegistry: TestabilityRegistry = platform.injector.get(TestabilityRegistry);
+	// 	(<any>testabilityRegistry)._applications.clear();
 
-		platform?.destroy();
-		platform = null;
-	}
+	// 	platform?.destroy();
+	// 	platform = null;
+	// }
 
-	// // console.log('NG: Trying to free memory');
-	delete window.webpackJsonp;
-	delete window.Zone;
-	delete window.frameworkStabilizers;
-	delete window.getAngularTestability;
-	delete window.getAllAngularTestabilities;
-	delete window.getAllAngularRootElements;
-	delete window.ng;
+	// // // console.log('NG: Trying to free memory');
+	// delete window.webpackJsonp;
+	// delete window.frameworkStabilizers;
+	// delete window.getAngularTestability;
+	// delete window.getAllAngularTestabilities;
+	// delete window.getAllAngularRootElements;
+	// delete window.ng;
 
 	// // console.log('NG: disposing mutation observer');
 	// // observer?.disconnect();
@@ -122,4 +126,12 @@ const tearDown = (observer?) => {
 
 	// remove all the nodes from the body just to simulate a blank page
 	document.body.textContent = '';
+};
+
+const syncSleep = (ms: number) => {
+	const start = Date.now();
+	let elapsed = 0;
+	while (elapsed < ms) {
+		elapsed = Date.now() - start;
+	}
 };

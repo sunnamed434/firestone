@@ -135,6 +135,11 @@ export class GameCountersComponent extends AbstractSubscriptionComponent impleme
 		await this.restoreWindowPosition();
 	}
 
+	ngOnDestroy() {
+		console.log('onDestroy');
+		super.ngOnDestroy();
+	}
+
 	@HostListener('mousedown')
 	dragMove() {
 		this.ow.dragMove(this.windowId, async (result) => {
