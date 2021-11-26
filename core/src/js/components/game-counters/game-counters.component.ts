@@ -9,7 +9,7 @@ import {
 	ViewRef,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { BattlegroundsState } from '../../models/battlegrounds/battlegrounds-state';
 import { GameState } from '../../models/decktracker/game-state';
 import { CardsFacadeService } from '../../services/cards-facade.service';
@@ -98,7 +98,7 @@ export class GameCountersComponent extends AbstractSubscriptionComponent impleme
 					filter(([state]) => !!state),
 					map(([state]) => this.buildDefinition(state, this.activeCounter, this.side)),
 					tap((info) => console.debug('def', info)),
-					distinctUntilChanged(),
+					// distinctUntilChanged((a, b) => this.areEqual(a, b)),
 					tap((filter) =>
 						setTimeout(() => {
 							if (!(this.cdr as ViewRef)?.destroyed) {
@@ -116,7 +116,7 @@ export class GameCountersComponent extends AbstractSubscriptionComponent impleme
 				.pipe(
 					filter(([state]) => !!state),
 					map(([state]) => this.buildBgsDefinition(state, this.activeCounter, this.side)),
-					distinctUntilChanged(),
+					// distinctUntilChanged((a, b) => this.areEqual(a, b)),
 					tap((filter) =>
 						setTimeout(() => {
 							if (!(this.cdr as ViewRef)?.destroyed) {

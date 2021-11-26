@@ -66,6 +66,19 @@ export class OverwolfService {
 	public static COUNTER_PLAYER_HERO_POWER_DAMAGE = 'CounterPlayerHeroPowerDamage';
 	public static BGS_COUNTER_PLAYER_POGO_WINDOW = 'BgsCounterPlayerPogo';
 
+	constructor() {
+		window['getAttackWindow'] = async () => {
+			const w = await this.obtainDeclaredWindow(OverwolfService.COUNTER_PLAYER_ATTACK_WINDOW);
+			await this.restoreWindow(w.id);
+		};
+		window['closeAttackWindow'] = async () => {
+			const w = await this.obtainDeclaredWindow(OverwolfService.COUNTER_PLAYER_ATTACK_WINDOW);
+
+			await this.closeWindow(w.id);
+		};
+		window['ow'] = this;
+	}
+
 	public isOwEnabled(): boolean {
 		try {
 			return overwolf && overwolf.windows;
