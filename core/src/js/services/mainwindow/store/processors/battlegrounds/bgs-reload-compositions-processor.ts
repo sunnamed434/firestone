@@ -1,13 +1,8 @@
-import { EventEmitter } from '@angular/core';
 import { BattlegroundsAppState } from '../../../../../models/mainwindow/battlegrounds/battlegrounds-app-state';
 import { MainWindowState } from '../../../../../models/mainwindow/main-window-state';
 import { NavigationState } from '../../../../../models/mainwindow/navigation/navigation-state';
 import { BgsInitService } from '../../../../battlegrounds/bgs-init.service';
-import { PreferencesService } from '../../../../preferences.service';
 import { BgsReloadCompositionsEvent } from '../../events/battlegrounds/bgs-reload-compositions-event';
-import { BgsRequestNewGlobalStatsLoadEvent } from '../../events/battlegrounds/bgs-request-new-global-stats-load-event';
-import { BgsTribesFilterSelectedEvent } from '../../events/battlegrounds/bgs-tribes-filter-selected-event';
-import { MainWindowStoreEvent } from '../../events/main-window-store-event';
 import { Processor } from '../processor';
 
 export class BgsReloadCompositionsProcessor implements Processor {
@@ -19,7 +14,7 @@ export class BgsReloadCompositionsProcessor implements Processor {
 		history,
 		navigationState: NavigationState,
 	): Promise<[MainWindowState, NavigationState]> {
-		const newComps = await this.bgs.loadCompositions();
+		const newComps = await this.bgs.loadCompositions(event.sensitivity);
 		return [
 			currentState.update({
 				battlegrounds: currentState.battlegrounds.update({

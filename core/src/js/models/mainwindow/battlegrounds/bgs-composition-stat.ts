@@ -7,6 +7,7 @@ export interface BgsCompositionStat {
 	readonly mmrPercentile: number;
 	readonly cards: readonly BgsCompositionStatCard[];
 	readonly buildExamples: readonly BgsCompositionStatBuildExample[];
+	readonly centroid: { [cardId: string]: number };
 }
 
 export interface BgsCompositionStatBuildExample {

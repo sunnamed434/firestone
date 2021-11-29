@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { BgsCompositionStat } from '../../../../models/mainwindow/battlegrounds/bgs-composition-stat';
-import { BgsTribesFilterSelectedEvent } from '../../../../services/mainwindow/store/events/battlegrounds/bgs-tribes-filter-selected-event';
+import { BgsReloadCompositionsEvent } from '../../../../services/mainwindow/store/events/battlegrounds/bgs-reload-compositions-event';
 import { OverwolfService } from '../../../../services/overwolf.service';
 import { AppUiStoreFacadeService } from '../../../../services/ui-store/app-ui-store-facade.service';
 import { cdLog } from '../../../../services/ui-store/app-ui-store.service';
@@ -16,6 +16,7 @@ import { areDeepEqual } from '../../../../services/utils';
 	],
 	template: `
 		<div class="battlegrounds-compositions">
+			<input [(ngModel)]="sensitivity" />
 			<div class="button" (click)="reload()">Reload</div>
 			<ng-container *ngIf="{ stats: stats$ | async } as value">
 				<ng-container *ngIf="value.stats">
@@ -34,6 +35,7 @@ import { areDeepEqual } from '../../../../services/utils';
 })
 export class BattlegroundsCompositionsComponent {
 	stats$: Observable<readonly BgsCompositionStat[]>;
+	sensitivity = 1;
 
 	constructor(
 		private readonly ow: OverwolfService,
@@ -61,6 +63,6 @@ export class BattlegroundsCompositionsComponent {
 
 	reload() {
 		console.debug('reloading');
-		this.store.send(new BgsTribesFilterSelectedEvent(null));
+		this.store.send(new BgsReloadCompositionsEvent(this.sensitivity));
 	}
 }
