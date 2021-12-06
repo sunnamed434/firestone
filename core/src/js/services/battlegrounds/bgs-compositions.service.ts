@@ -6,6 +6,7 @@ import {
 	BgsCompositionStatCard,
 } from '../../models/mainwindow/battlegrounds/bgs-composition-stat';
 import { ApiRunner } from '../api-runner';
+import { groupByFunction, sumOnArray } from '../utils';
 import centroidDefinitions from './centroid-vector-base.json';
 import compositions from './compositions.json';
 
@@ -44,6 +45,7 @@ export class BgsCompositionsService {
 					name: null,
 					top1: build.stats.winrate,
 					top4: build.stats.top4_rate,
+					dataPoints: build.stats.frequency,
 					averagePosition: build.stats.average_place,
 					// For now we hardcode this
 					mmrPercentile: 100,
@@ -158,10 +160,48 @@ export class BgsCompositionsService {
 		}
 
 		const toKeepAsIs = result.filter((comp) => !toMerge.some((merged) => merged.includes(comp)));
-		return [...toKeepAsIs, ...toMerge.map((clustersToGroup) => this.mergeClusters(...clustersToGroup))];
+		return [...toKeepAsIs, ...toMerge.map((clustersToGroup) => this.mergeClusters(clustersToGroup))];
 	}
 
-	private mergeClusters(cluster: BgsCompositionStat, other: BgsCompositionStat) {}
+	private mergeClusters(clusters: readonly BgsCompositionStat[]): BgsCompositionStat {
+		const totalDataPoints = sumOnArray(clusters, (cluster) => cluster.dataPoints);
+		return {
+			id: clusters[0].id,
+			cards: this.mergeCommonCards(clusters),
+			averagePosition:
+				sumOnArray(clusters, (cluster) => cluster.averagePosition * cluster.dataPoints) / totalDataPoints,
+			top1: sumOnArray(clusters, (cluster) => cluster.top1 * cluster.dataPoints) / totalDataPoints,
+			top4: sumOnArray(clusters, (cluster) => cluster.top4 * cluster.dataPoints) / totalDataPoints,
+			mmrPercentile: clusters[0].mmrPercentile,
+			dataPoints: sumOnArray(clusters, (cluster) => cluster.dataPoints),
+			buildExamples: clusters.flatMap((cluster) => cluster.buildExamples),
+			centroid: null,
+			name: null,
+		};
+	}
+
+	private mergeCommonCards(clusters: readonly BgsCompositionStat[]): readonly BgsCompositionStatCard[] {
+		const denormalizedCards = clusters.flatMap((cluster) =>
+			cluster.cards.map(
+				(card) =>
+					(Object.fromEntries([
+						...Object.entries(card).map((entry) => [entry[0], entry[1] * cluster.dataPoints]),
+						['dataPoints', cluster.dataPoints],
+					]) as any) as BgsCompositionStatCard,
+			),
+		);
+		const groupedByCardId = groupByFunction((card: BgsCompositionStatCard) => card.cardId)(denormalizedCards);
+		return Object.values(groupedByCardId).map((cards) => {
+			const allEntryKeys = Object.entries(cards[0]).map((entry) => entry[0]);
+			const allDataPoints = sumOnArray(cards, (card: any) => card.dataPoints);
+			const newEntries = allEntryKeys.map((entryKey) => [
+				entryKey,
+				sumOnArray(cards, (card) => Object.entries(card).find((entry) => entry[0] === entryKey)[1]) /
+					allDataPoints,
+			]);
+			return Object.fromEntries(newEntries);
+		});
+	}
 
 	private calculateDistance(centroid1: { [cardId: string]: number }, centroid2: { [cardId: string]: number }) {
 		let distance = 0;

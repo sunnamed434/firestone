@@ -4,6 +4,7 @@ export interface BgsCompositionStat {
 	readonly top1: number;
 	readonly top4: number;
 	readonly averagePosition: number;
+	readonly dataPoints: number;
 	readonly mmrPercentile: number;
 	readonly cards: readonly BgsCompositionStatCard[];
 	readonly buildExamples: readonly BgsCompositionStatBuildExample[];
