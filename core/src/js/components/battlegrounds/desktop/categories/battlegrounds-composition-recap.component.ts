@@ -17,7 +17,7 @@ import { pickRandomElementInArray } from '../../../../services/utils';
 	],
 	template: `
 		<div class="battlegrounds-composition-recap">
-			<div class="name">Unnamed comp</div>
+			<div class="name">Unnamed comp {{ clusterId }}</div>
 			<div class="minions">
 				<bgs-board [entities]="entities" [maxBoardHeight]="-1"></bgs-board>
 			</div>
@@ -36,10 +36,12 @@ export class BattlegroundsCompositionRecapComponent {
 		this.entities = this.buildBoard(value);
 		console.debug('built board', this.entities, value);
 		this.averagePosition = value.averagePosition;
+		this.clusterId = value.id;
 	}
 
 	entities: readonly Entity[];
 	averagePosition: number;
+	clusterId: number;
 
 	constructor(private readonly allCards: CardsFacadeService) {}
 
@@ -49,6 +51,7 @@ export class BattlegroundsCompositionRecapComponent {
 		if (!boardExample) {
 			console.warn('empty example', value);
 		}
+		console.debug('building board example', boardExample, value);
 		return boardExample.cardIds.map((cardId) => {
 			const cardTemplate = value.cards.find((card) => card.cardId === cardId);
 			const tags = this.buildTags(cardTemplate);

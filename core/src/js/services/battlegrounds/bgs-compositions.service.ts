@@ -14,14 +14,14 @@ import compositions from './compositions.json';
 export class BgsCompositionsService {
 	constructor(private readonly cards: CardsFacadeService, private readonly api: ApiRunner) {}
 
-	public async loadCompositions(sensitity = 1): Promise<readonly BgsCompositionStat[]> {
-		console.debug('starting reload');
+	public async loadCompositions(sensitity = 3.6): Promise<readonly BgsCompositionStat[]> {
+		console.debug('[bgs-comp] starting reload');
 		const compositionsFromService: readonly CompositionsFromRemote[] =
-			(await this.api.callGetApi('./compositions.json?v=2')) ?? compositions;
+			(await this.api.callGetApi('./compositions.json?v=3')) ?? compositions;
 		const centroidVectorBase: { [key: string]: number } =
 			(await this.api.callGetApi('./centroid-definitions.json')) ?? centroidDefinitions;
 		const result = this.transformCompositions(compositionsFromService[0], Object.keys(centroidVectorBase));
-		console.debug('[bgs-init] loaded compositions', result);
+		console.debug('[bgs-comp] loaded compositions', result);
 		const merged: readonly BgsCompositionStat[] = this.mergeCompositions(result, sensitity);
 		return merged;
 	}
@@ -30,6 +30,7 @@ export class BgsCompositionsService {
 		compositionsFromService: CompositionsFromRemote,
 		centroidVectorBase: readonly string[],
 	): readonly BgsCompositionStat[] {
+		console.debug('[bgs-comp] transformCompositions', compositionsFromService, centroidVectorBase);
 		return compositionsFromService.round_builds
 			.map((build) => {
 				const cards = this.buildCards(build.common_cards);
@@ -40,7 +41,8 @@ export class BgsCompositionsService {
 				for (let i = 0; i < centroidVectorBase.length; i++) {
 					centroid[centroidVectorBase[i]] = build.centroid[i];
 				}
-				return {
+				const examples = this.buildBuildExamples(build.top_10_build_stats, cards, build);
+				const result = {
 					id: build.cluster,
 					name: null,
 					top1: build.stats.winrate,
@@ -50,9 +52,11 @@ export class BgsCompositionsService {
 					// For now we hardcode this
 					mmrPercentile: 100,
 					cards: cards,
-					buildExamples: this.buildBuildExamples(build.top_10_build_stats, cards, build),
+					buildExamples: examples,
 					centroid: centroid,
 				};
+				console.debug('\t', '[bgs-comp] handling cluster', build.cluster, result);
+				return result;
 			})
 			.filter((comp) => !!comp.buildExamples.length)
 			.sort((a, b) => a.averagePosition - b.averagePosition);
@@ -63,7 +67,7 @@ export class BgsCompositionsService {
 		cards: readonly BgsCompositionStatCard[],
 		finalBuild: any,
 	): readonly BgsCompositionStatBuildExample[] {
-		const debug = finalBuild.cluster === 18;
+		const debug = false; // finalBuild.cluster === 18;
 		const refCardIds = cards.map((card) => card.cardId);
 		return Object.keys(builds)
 			.map((identifier) => {
@@ -121,19 +125,25 @@ export class BgsCompositionsService {
 		});
 	}
 
-	private mergeCompositions(result: readonly BgsCompositionStat[], sensitity: number): readonly BgsCompositionStat[] {
-		let merged: readonly BgsCompositionStat[] = result;
+	private mergeCompositions(
+		initial: readonly BgsCompositionStat[],
+		sensitity: number,
+	): readonly BgsCompositionStat[] {
+		console.debug('[bgs-comp] merging', initial, sensitity);
+		let merged: readonly BgsCompositionStat[] = initial;
 		let i = 0;
 		while (true) {
-			console.debug('iteration ', i++);
+			console.debug('[bgs-comp] iteration ', i++);
 			const afterMerge = this.mergeCompositionsSinglePass(merged, sensitity);
-			console.debug('after merge', afterMerge);
+			console.debug('[bgs-comp] after merge', afterMerge);
 			if (afterMerge.length === merged.length) {
 				break;
 			}
 			merged = afterMerge;
+			console.log('[bgs-comp] single pass merge for now');
+			break;
 		}
-		return result;
+		return merged;
 	}
 
 	private mergeCompositionsSinglePass(
@@ -147,7 +157,16 @@ export class BgsCompositionsService {
 				const cluster = result[i];
 				const other = result[j];
 				const distance = this.calculateDistance(cluster.centroid, other.centroid);
-				console.debug('distance between', cluster, other, 'is', distance);
+				console.debug(
+					'[bgs-comp] distance between',
+					cluster.id,
+					other.id,
+					cluster,
+					other,
+					'is',
+					distance,
+					sensitity,
+				);
 				if (distance < sensitity) {
 					const existing = toMerge.find((merged) => merged.includes(cluster));
 					if (existing) {
@@ -164,8 +183,13 @@ export class BgsCompositionsService {
 	}
 
 	private mergeClusters(clusters: readonly BgsCompositionStat[]): BgsCompositionStat {
+		console.debug(
+			'[bgs-comp] merging clusters',
+			clusters.map((c) => c.id),
+			clusters,
+		);
 		const totalDataPoints = sumOnArray(clusters, (cluster) => cluster.dataPoints);
-		return {
+		const result = {
 			id: clusters[0].id,
 			cards: this.mergeCommonCards(clusters),
 			averagePosition:
@@ -178,20 +202,26 @@ export class BgsCompositionsService {
 			centroid: null,
 			name: null,
 		};
+		console.debug(
+			'[bgs-comp] merged clusters',
+			clusters.map((c) => c.id),
+			result,
+		);
+		return result;
 	}
 
 	private mergeCommonCards(clusters: readonly BgsCompositionStat[]): readonly BgsCompositionStatCard[] {
 		const denormalizedCards = clusters.flatMap((cluster) =>
-			cluster.cards.map(
-				(card) =>
-					(Object.fromEntries([
-						...Object.entries(card).map((entry) => [entry[0], entry[1] * cluster.dataPoints]),
-						['dataPoints', cluster.dataPoints],
-					]) as any) as BgsCompositionStatCard,
-			),
+			cluster.cards.map((card) => ({
+				...((Object.fromEntries([
+					...Object.entries(card).map((entry) => [entry[0], entry[1] * cluster.dataPoints]),
+					['dataPoints', cluster.dataPoints],
+				]) as any) as BgsCompositionStatCard),
+				cardId: card.cardId,
+			})),
 		);
 		const groupedByCardId = groupByFunction((card: BgsCompositionStatCard) => card.cardId)(denormalizedCards);
-		return Object.values(groupedByCardId).map((cards) => {
+		const result = Object.values(groupedByCardId).map((cards) => {
 			const allEntryKeys = Object.entries(cards[0]).map((entry) => entry[0]);
 			const allDataPoints = sumOnArray(cards, (card: any) => card.dataPoints);
 			const newEntries = allEntryKeys.map((entryKey) => [
@@ -199,8 +229,13 @@ export class BgsCompositionsService {
 				sumOnArray(cards, (card) => Object.entries(card).find((entry) => entry[0] === entryKey)[1]) /
 					allDataPoints,
 			]);
-			return Object.fromEntries(newEntries);
+			return {
+				...Object.fromEntries(newEntries),
+				cardId: cards[0].cardId,
+			} as BgsCompositionStatCard;
 		});
+		console.debug('[bgs-comp] merged comon cards', result, groupedByCardId);
+		return result;
 	}
 
 	private calculateDistance(centroid1: { [cardId: string]: number }, centroid2: { [cardId: string]: number }) {

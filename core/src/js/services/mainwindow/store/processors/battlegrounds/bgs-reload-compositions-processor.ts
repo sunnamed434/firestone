@@ -15,6 +15,7 @@ export class BgsReloadCompositionsProcessor implements Processor {
 		navigationState: NavigationState,
 	): Promise<[MainWindowState, NavigationState]> {
 		const newComps = await this.bgs.loadCompositions(event.sensitivity);
+		console.debug('[bgs-comp] newComps', newComps);
 		return [
 			currentState.update({
 				battlegrounds: currentState.battlegrounds.update({

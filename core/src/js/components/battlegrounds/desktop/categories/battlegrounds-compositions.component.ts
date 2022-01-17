@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { BgsCompositionStat } from '../../../../models/mainwindow/battlegrounds/bgs-composition-stat';
 import { BgsReloadCompositionsEvent } from '../../../../services/mainwindow/store/events/battlegrounds/bgs-reload-compositions-event';
-import { OverwolfService } from '../../../../services/overwolf.service';
 import { AppUiStoreFacadeService } from '../../../../services/ui-store/app-ui-store-facade.service';
 import { cdLog } from '../../../../services/ui-store/app-ui-store.service';
 import { areDeepEqual } from '../../../../services/utils';
+import { AbstractSubscriptionComponent } from '../../../abstract-subscription.component';
 
 @Component({
 	selector: 'battlegrounds-compositions',
@@ -33,27 +33,30 @@ import { areDeepEqual } from '../../../../services/utils';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BattlegroundsCompositionsComponent {
+export class BattlegroundsCompositionsComponent extends AbstractSubscriptionComponent implements AfterContentInit {
 	stats$: Observable<readonly BgsCompositionStat[]>;
-	sensitivity = 1;
+	sensitivity = 3.6;
 
-	constructor(
-		private readonly ow: OverwolfService,
-		private readonly store: AppUiStoreFacadeService,
-		private readonly cdr: ChangeDetectorRef,
-	) {
+	constructor(protected readonly store: AppUiStoreFacadeService, protected readonly cdr: ChangeDetectorRef) {
+		super(store, cdr);
+	}
+
+	ngAfterContentInit(): void {
 		this.stats$ = this.store
 			.listen$(([main, nav]) => main.battlegrounds.compositions)
 			.pipe(
 				tap((info) => cdLog('info', info)),
 				map(([stats]) => stats?.filter((stat) => stat)),
+				// tap((info) => cdLog('info2', info)),
 				distinctUntilChanged((a, b) => {
 					// console.debug('changed deep?', a, b, JSON.stringify(a), JSON.stringify(b));
 					return areDeepEqual(a, b);
 				}),
-				// FIXME
-				tap((filter) => setTimeout(() => this.cdr?.detectChanges(), 0)),
-				tap((stats) => cdLog('emitting stats in ', this.constructor.name, stats)),
+				this.mapData((stats) => [...stats].sort((a, b) => a.averagePosition - b.averagePosition)),
+				// tap((info) => cdLog('info3', info)),
+				// // FIXME
+				// tap((filter) => setTimeout(() => this.cdr?.detectChanges(), 0)),
+				// tap((stats) => cdLog('emitting stats in ', this.constructor.name, stats)),
 			);
 	}
 
