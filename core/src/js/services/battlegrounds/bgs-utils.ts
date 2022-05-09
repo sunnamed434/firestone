@@ -69,6 +69,10 @@ export const getReferenceTribeCardId = (tribe: string | Race): string => {
 		case Race.ELEMENTAL:
 			referenceCardId = CardIds.Sellemental;
 			break;
+		case 'naga':
+		case Race.NAGA:
+			referenceCardId = CardIds.MiniMyrmidon;
+			break;
 		case 'quilboar':
 		case Race.QUILBOAR:
 			referenceCardId = CardIds.SunBaconRelaxer;
@@ -263,6 +267,8 @@ export const getHeroPower = (heroCardId: string, allCards: CardsFacadeService): 
 			return CardIds.AmbassadorFaelin_ExpeditionPlans;
 		case CardIds.IniStormcoil2:
 			return CardIds.IniStormcoil_Mechgyver;
+		case CardIds.QueenAzshara:
+			return CardIds.QueenAzshara_AzsharasAmbition;
 
 		case '':
 			return null; // new heroes
@@ -278,6 +284,8 @@ export const normalizeHeroCardId = (heroCardId: string, allCards: CardsFacadeSer
 	switch (normalizedAfterSkin) {
 		case 'TB_BaconShop_HERO_59t':
 			return 'TB_BaconShop_HERO_59';
+		case CardIds.NagaQueenAzshara:
+			return CardIds.QueenAzshara;
 		default:
 			return normalizedAfterSkin;
 	}
@@ -373,6 +381,9 @@ export const getTribeForInclusion = (card: ReferenceCard): Race => {
 		case CardIds.AgamagganTheGreatBoarBattlegrounds:
 		case CardIds.ProphetOfTheBoar:
 		case CardIds.ProphetOfTheBoarBattlegrounds:
+			return Race.QUILBOAR;
+		case CardIds.OrgozoaTheTender:
+		case CardIds.OrgozoaTheTenderBattlegrounds:
 			return Race.QUILBOAR;
 		default:
 			return getEffectiveTribeEnum(card);

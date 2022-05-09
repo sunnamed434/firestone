@@ -57,6 +57,10 @@ import { LocalizationFacadeService } from '../../../services/localization-facade
 				<div class="node"></div>
 				{{ 'global.tribe.quilboar' | owTranslate }}
 			</div>
+			<div class="item naga" *ngIf="isTribe('naga')">
+				<div class="node"></div>
+				{{ 'global.tribe.naga' | owTranslate }}
+			</div>
 			<div class="item blank">
 				<div class="node"></div>
 				{{ 'battlegrounds.post-match-stats.composition.blank-tribe' | owTranslate }}
@@ -290,6 +294,7 @@ export class BgsChartWarbandCompositionComponent {
 					this.buildSeries(this.i18n.translateString('global.tribes.pirate'), 'pirate', history),
 					this.buildSeries(this.i18n.translateString('global.tribes.elemental'), 'elemental', history),
 					this.buildSeries(this.i18n.translateString('global.tribes.quilboar'), 'quilboar', history),
+					this.buildSeries(this.i18n.translateString('global.tribes.naga'), 'naga', history),
 					this.buildSeries(this.i18n.translateString('global.tribes.all'), 'all', history),
 					this.buildSeries(this.i18n.translateString('global.tribes.blank'), null, history),
 				],
