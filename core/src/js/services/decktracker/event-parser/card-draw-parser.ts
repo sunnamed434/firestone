@@ -22,11 +22,12 @@ export class CardDrawParser implements EventParser {
 
 	async parse(currentState: GameState, gameEvent: GameEvent): Promise<GameState> {
 		const [cardId, controllerId, localPlayer, entityId] = gameEvent.parse();
-		// console.debug('drawing from deck', cardId, gameEvent);
+		console.log('drawing from deck', cardId, gameEvent, currentState);
 		const isPlayer = controllerId === localPlayer.PlayerId;
 		const deck = isPlayer ? currentState.playerDeck : currentState.opponentDeck;
 
 		const card = this.helper.findCardInZone(deck.deck, cardId, entityId, true);
+		console.log('card in deck', card);
 
 		const lastInfluencedByCardId = gameEvent.additionalData?.lastInfluencedByCardId ?? card.lastAffectedByCardId;
 
@@ -34,7 +35,7 @@ export class CardDrawParser implements EventParser {
 			gameEvent.additionalData?.lastInfluencedByCardId,
 		);
 		const isTradable = !!this.allCards.getCard(cardId).mechanics?.includes(GameTag[GameTag.TRADEABLE]);
-		// console.debug('drawing from deck', isTradable, this.allCards.getCard(cardId));
+		console.log('drawing from deck', isTradable, this.allCards.getCard(cardId));
 		const isCardInfoPublic =
 			// Also includes a publicCardCreator so that cards drawn from deck when we know what they are (eg
 			// Southsea Scoundrel) are flagged
@@ -51,7 +52,7 @@ export class CardDrawParser implements EventParser {
 		const isCreatorPublic =
 			isCardInfoPublic || (!isTradable && publicCardCreators.includes(lastInfluencedByCardId));
 
-		//console.debug('found card in zone', card, deck, cardId, entityId, isCardInfoPublic);
+		console.log('found card in zone', card, deck, cardId, entityId, isCardInfoPublic);
 
 		const creatorCardId = gameEvent.additionalData?.creatorCardId;
 		const cardWithCreator = card.update({
@@ -61,7 +62,7 @@ export class CardDrawParser implements EventParser {
 			cardName: isCardInfoPublic ? this.i18n.getCardName(card?.cardId) : undefined,
 			lastAffectedByCardId: isCreatorPublic ? lastInfluencedByCardId : undefined,
 		} as DeckCard);
-		//console.debug('cardWithCreator', cardWithCreator, isCreatorPublic, publicCardCreators, lastInfluencedByCardId);
+		console.log('cardWithCreator', cardWithCreator, isCreatorPublic, publicCardCreators, lastInfluencedByCardId);
 		const previousDeck = deck.deck;
 
 		const newDeck: readonly DeckCard[] = isCardInfoPublic
@@ -70,14 +71,17 @@ export class CardDrawParser implements EventParser {
 		//console.debug('newDeck', newDeck, isCardInfoPublic, previousDeck);
 		const previousHand = deck.hand;
 		const newHand: readonly DeckCard[] = this.helper.addSingleCardToZone(previousHand, cardWithCreator);
-		//console.debug('added card to hand', newHand);
+		console.log('added card to hand', newHand);
 		const newPlayerDeck = Object.assign(new DeckState(), deck, {
 			deck: newDeck,
 			hand: newHand,
 		});
-		return Object.assign(new GameState(), currentState, {
+		console.log('newPlayerDeck', newPlayerDeck);
+		const result = Object.assign(new GameState(), currentState, {
 			[isPlayer ? 'playerDeck' : 'opponentDeck']: newPlayerDeck,
 		});
+		console.log('result', result);
+		return result;
 	}
 
 	event(): string {

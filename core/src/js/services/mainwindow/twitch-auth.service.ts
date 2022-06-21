@@ -10,7 +10,7 @@ import {
 	TwitchBgsBoard,
 	TwitchBgsBoardEntity,
 	TwitchBgsPlayer,
-	TwitchBgsState,
+	TwitchBgsState
 } from '../../components/decktracker/overlay/twitch/twitch-bgs-state';
 import { BattlegroundsState } from '../../models/battlegrounds/battlegrounds-state';
 import { BgsPlayer } from '../../models/battlegrounds/bgs-player';
@@ -73,7 +73,7 @@ export class TwitchAuthService {
 			);
 		combineLatest(this.deckEvents, this.bgEvents, this.twitchAccessToken$)
 			.pipe(
-				debounceTime(500),
+				debounceTime(100),
 				distinctUntilChanged(),
 				map(([deckEvent, bgsState, twitchAccessToken]) =>
 					this.buildEvent(deckEvent, bgsState, twitchAccessToken),
@@ -211,7 +211,7 @@ export class TwitchAuthService {
 		}
 
 		const httpHeaders: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${prefs.twitchAccessToken}`);
-		// console.debug('[twitch-auth] sending event', newEvent);
+		console.log('[twitch-auth] sending event', newEvent);
 		this.http.post(EBS_URL, newEvent, { headers: httpHeaders }).subscribe(
 			(data: any) => {
 				// Do nothing

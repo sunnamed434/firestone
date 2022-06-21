@@ -153,8 +153,8 @@ export class GameEvent implements GameStateEvent {
 	readonly type: string;
 	readonly cardId: string;
 	readonly controllerId: number; // matches a PlayerId
-	readonly localPlayer: GameEventPlayer;
-	readonly opponentPlayer: GameEventPlayer;
+	localPlayer: GameEventPlayer;
+	opponentPlayer: GameEventPlayer;
 	readonly entityId: number;
 	readonly gameState: GameState = {} as GameState;
 
@@ -174,6 +174,18 @@ export class GameEvent implements GameStateEvent {
 	}
 
 	public parse(): [string, number, GameEventPlayer, number] {
+		if (!this.localPlayer?.Id) {
+			this.localPlayer = {
+				Id: 2,
+				PlayerId: 1,
+			} as GameEventPlayer;
+		}
+		if (!this.opponentPlayer?.Id) {
+			this.opponentPlayer = {
+				Id: 3,
+				PlayerId: 2,
+			} as GameEventPlayer;
+		}
 		// cardId being "null" needs to be a conscious choice, as it triggers specific
 		// processes when looking for the card in the other zones
 		return [this.cardId ?? '', this.controllerId, this.localPlayer, this.entityId];

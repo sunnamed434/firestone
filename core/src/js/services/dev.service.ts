@@ -148,12 +148,13 @@ export class DevService {
 			console.debug('processing done');
 		};
 		window['startDeckCycle'] = async (logName, repeats, deckString) => {
-			console.debug('starting new deck cycle', logName, repeats, deckString);
+			console.log('starting new deck cycle', logName, repeats, deckString);
 			// eslint-disable-next-line @typescript-eslint/no-empty-function
 			console.debug = console.debug = (args) => {};
-			const logsLocation = `E:\\Source\\zerotoheroes\\firestone\\integration-tests\\events\\${logName}.json`;
+			const logsLocation = `G:\\Source\\firestone\\firestone\\integration-tests\\events\\${logName}.json`;
 			const logContents = await this.ow.readTextFile(logsLocation);
 			const events = JSON.parse(logContents);
+			console.log('contents', events);
 			while (repeats > 0) {
 				console.warn('starting iteration', repeats);
 				await this.loadEvents(events, true, deckString);
@@ -255,7 +256,8 @@ export class DevService {
 
 	private async loadEvents(events: any, awaitEvents: boolean, deckstring?: string, timeBetweenEvents?: number) {
 		// return;
-
+		console.log('loading events', deckstring, events);
+		timeBetweenEvents = 1000;
 		for (const event of events) {
 			if (event.Type === 'BATTLEGROUNDS_NEXT_OPPONENT') {
 				await sleep(1000);
@@ -263,6 +265,7 @@ export class DevService {
 			if (event.Type === 'BATTLEGROUNDS_PLAYER_BOARD') {
 				await sleep(3000);
 			}
+			console.log('will send fake event', event.Type, event);
 
 			if (awaitEvents) {
 				await this.gameEvents.dispatchGameEvent({ ...event });
@@ -273,7 +276,8 @@ export class DevService {
 				this.gameEvents.dispatchGameEvent({ ...event });
 			}
 
-			if (deckstring && event.Type === 'LOCAL_PLAYER') {
+			if (deckstring && event.Type === 'FIRST_PLAYER') {
+				console.log('extra handle for FIRST_PLAYER');
 				await sleep(500);
 				const decklist = this.handler.buildDeckList(deckstring);
 
@@ -293,11 +297,12 @@ export class DevService {
 					hand: deckstring ? this.flagCards(deck.hand) : deck.hand,
 					otherZone: deckstring ? this.flagCards(deck.otherZone) : deck.otherZone,
 				} as DeckState);
-				console.debug('[opponent-player] newPlayerDeck', newPlayerDeck);
+				console.log('[opponent-player] newPlayerDeck', newPlayerDeck);
 				this.gameState.state = currentState.update({
 					playerDeck: newPlayerDeck,
 				} as GameState);
-				console.debug('updated decklist', this.gameState.state);
+				console.log('updated decklist', this.gameState.state);
+				timeBetweenEvents = 200;
 			}
 		}
 	}

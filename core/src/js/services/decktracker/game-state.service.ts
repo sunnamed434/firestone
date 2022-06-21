@@ -346,10 +346,19 @@ export class GameStateService {
 		for (const parser of this.eventParsers) {
 			try {
 				if (parser.applies(gameEvent, this.state, prefs)) {
+					console.log('state before parser', this.state);
 					this.state = await parser.parse(this.state, gameEvent, {
 						secretWillTrigger: this.secretWillTrigger,
 						minionsWillDie: this.minionsWillDie,
 					});
+					console.log('state after parser', this.state);
+					console.log(
+						'copied state after parser',
+						await parser.parse(this.state, gameEvent, {
+							secretWillTrigger: this.secretWillTrigger,
+							minionsWillDie: this.minionsWillDie,
+						}),
+					);
 				}
 			} catch (e) {
 				console.error('[game-state] Exception while applying parser', parser.event(), e.message, e.stack, e);
@@ -373,6 +382,7 @@ export class GameStateService {
 					playerDeck: updatedPlayerDeck,
 					opponentDeck: udpatedOpponentDeck,
 				} as GameState);
+				console.log('state after deckupdate', this.state);
 			}
 		} catch (e) {
 			console.error('[game-state] Could not update players decks', gameEvent.type, e.message, e.stack, e);
@@ -385,7 +395,7 @@ export class GameStateService {
 				},
 				state: this.state,
 			};
-			// console.debug('[game-state] emitting event', emittedEvent.event.name, gameEvent, emittedEvent.state);
+			console.log('[game-state] emitting event', emittedEvent.event.name, gameEvent, emittedEvent.state);
 			this.eventEmitters.forEach((emitter) => emitter(emittedEvent));
 		}
 
@@ -413,15 +423,19 @@ export class GameStateService {
 	// TODO: this should move elsewhere
 	private updateDeck(deck: DeckState, gameState: GameState, playerFromTracker): DeckState {
 		const stateWithMetaInfos = this.gameStateMetaInfos.updateDeck(deck, gameState.currentTurn);
+		console.log('after meta infos', stateWithMetaInfos);
 		// Add missing info like card names, if the card added doesn't come from a deck state
 		// (like with the Chess brawl)
 		const newState = this.deckCardService.fillMissingCardInfoInDeck(stateWithMetaInfos);
+		console.log('after fill missing card info', newState);
 		const playerDeckWithDynamicZones = this.dynamicZoneHelper.fillDynamicZones(newState, this.i18n);
+		console.log('after fill dynamic zones', playerDeckWithDynamicZones);
 		if (!playerFromTracker) {
 			return playerDeckWithDynamicZones;
 		}
 
 		const playerDeckWithZonesOrdered = this.zoneOrdering.orderZones(playerDeckWithDynamicZones, playerFromTracker);
+		console.log('after order zones', playerDeckWithZonesOrdered);
 		const newBoard: readonly DeckCard[] = playerDeckWithZonesOrdered.board.map((card) => {
 			const entity = playerFromTracker.Board?.find((entity) => entity.entityId === card.entityId);
 			return DeckCard.create({
