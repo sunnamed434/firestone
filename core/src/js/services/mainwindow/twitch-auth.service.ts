@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Entity } from '@firestone-hs/hs-replay-xml-parser/dist/public-api';
-import { GameTag } from '@firestone-hs/reference-data';
+import { GameTag, SceneMode } from '@firestone-hs/reference-data';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
@@ -148,6 +148,7 @@ export class TwitchAuthService {
 			: null;
 
 		const result = {
+			scene: SceneMode.GAMEPLAY,
 			deck: newDeckState,
 			bgs: newBgsState,
 		};
