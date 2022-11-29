@@ -10,19 +10,19 @@ import {
 	Output,
 	ViewRef,
 } from '@angular/core';
+import { arraysEqual, removeFromReadonlyArray } from '@firestone/shared/utils';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { IOption } from 'ng-select';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { distinctUntilChanged, filter } from 'rxjs/operators';
 import { AppUiStoreFacadeService } from '../services/ui-store/app-ui-store-facade.service';
-import { arraysEqual, removeFromReadonlyArray } from '../services/utils';
 import { AbstractSubscriptionComponent } from './abstract-subscription.component';
 
 @Component({
 	selector: 'filter-dropdown-multiselect',
 	styleUrls: [`../../css/component/filter-dropdown-multiselect.component.scss`],
 	template: `
-		<div class="filter-dropdown-multiselect" [ngClass]="{ 'showing': showing }" *ngIf="_visible">
+		<div class="filter-dropdown-multiselect" [ngClass]="{ showing: showing }" *ngIf="_visible">
 			<div class="value" (click)="toggle()">
 				<div class="text" [innerHTML]="valueText$ | async"></div>
 				<div class="caret i-30">
@@ -64,7 +64,7 @@ import { AbstractSubscriptionComponent } from './abstract-subscription.component
 					></div>
 					<div
 						class="button apply"
-						[ngClass]="{ 'disabled': !value.validSelection }"
+						[ngClass]="{ disabled: !value.validSelection }"
 						[helpTooltip]="buttonTooltip(value.validSelection)"
 						(click)="confirmSelection(value.validSelection)"
 						[owTranslate]="'app.global.controls.multiselect-validation-button'"

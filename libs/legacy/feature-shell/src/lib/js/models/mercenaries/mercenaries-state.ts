@@ -1,10 +1,10 @@
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { AppInjector } from '../../services/app-injector';
 import { LazyDataInitService } from '../../services/lazy-data-init.service';
 import {
 	MercenariesGlobalStats,
 	MercenariesReferenceData,
 } from '../../services/mercenaries/mercenaries-state-builder.service';
-import { NonFunctionProperties, uuid } from '../../services/utils';
 import { MemoryMercenariesCollectionInfo, MemoryVisitor } from '../memory/memory-mercenaries-collection-info';
 import { MemoryMercenariesInfo } from '../memory/memory-mercenaries-info';
 import { MercenariesCategoryId } from './mercenary-category-id.type';

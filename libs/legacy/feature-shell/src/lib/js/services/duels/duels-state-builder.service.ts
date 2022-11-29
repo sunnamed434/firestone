@@ -7,6 +7,7 @@ import { CardClass, CardIds } from '@firestone-hs/reference-data';
 import { DuelsRewardsInfo } from '@firestone-hs/retrieve-users-duels-runs/dist/duels-rewards-info';
 import { DuelsRunInfo } from '@firestone-hs/retrieve-users-duels-runs/dist/duels-run-info';
 import { Input } from '@firestone-hs/retrieve-users-duels-runs/dist/input';
+import { groupByFunction } from '@firestone/shared/utils';
 import { DuelsConfig } from '@models/duels/duels-config';
 import { AdventuresInfo, DuelsInfo } from '@models/memory/memory-duels';
 import { MemoryUpdate } from '@models/memory/memory-update';
@@ -37,7 +38,6 @@ import { DuelsTopDeckRunDetailsLoadedEvent } from '../mainwindow/store/events/du
 import { MainWindowStoreEvent } from '../mainwindow/store/events/main-window-store-event';
 import { OverwolfService } from '../overwolf.service';
 import { PreferencesService } from '../preferences.service';
-import { groupByFunction } from '../utils';
 
 const DUELS_RUN_INFO_URL = 'https://p6r07hp5jf.execute-api.us-west-2.amazonaws.com/Prod/{proxy+}';
 // const DUELS_GLOBAL_STATS_URL = 'https://static.zerotoheroes.com/api/duels-global-stats-hero-class.gz.json';

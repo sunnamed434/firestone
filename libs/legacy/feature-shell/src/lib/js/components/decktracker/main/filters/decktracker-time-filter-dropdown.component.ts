@@ -10,12 +10,12 @@ import { DeckTimeFilterType } from '@models/mainwindow/decktracker/deck-time-fil
 import { ChangeDeckTimeFilterEvent } from '@services/mainwindow/store/events/decktracker/change-deck-time-filter-event';
 import { MainWindowStoreEvent } from '@services/mainwindow/store/events/main-window-store-event';
 import { OverwolfService } from '@services/overwolf.service';
-import { formatPatch } from '@services/utils';
 import { IOption } from 'ng-select';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { LocalizationFacadeService } from '../../../../services/localization-facade.service';
 import { AppUiStoreFacadeService } from '../../../../services/ui-store/app-ui-store-facade.service';
+import { formatPatch } from '../../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../../abstract-subscription.component';
 
 @Component({
@@ -39,7 +39,8 @@ import { AbstractSubscriptionComponent } from '../../../abstract-subscription.co
 })
 export class DecktrackerTimeFilterDropdownComponent
 	extends AbstractSubscriptionComponent
-	implements AfterContentInit, AfterViewInit {
+	implements AfterContentInit, AfterViewInit
+{
 	filter$: Observable<{ filter: string; placeholder: string; options: IOption[]; visible: boolean }>;
 
 	private stateUpdater: EventEmitter<MainWindowStoreEvent>;

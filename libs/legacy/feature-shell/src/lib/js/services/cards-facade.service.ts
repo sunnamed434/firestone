@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AllCardsService, ReferenceCard } from '@firestone-hs/reference-data';
+import { sleep } from '@firestone/shared/utils';
 import { OverwolfService } from './overwolf.service';
-import { sleep } from './utils';
 
 @Injectable()
 export class CardsFacadeService {

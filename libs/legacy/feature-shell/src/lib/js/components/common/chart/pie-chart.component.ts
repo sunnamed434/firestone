@@ -10,7 +10,7 @@ import {
 import { ChartData, ChartOptions } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 // import { Color, Label } from 'ng2-charts';
-import { sleep } from '../../../services/utils';
+import { sleep } from '@firestone/shared/utils';
 import { InputPieChartData, InputPieChartOptions } from './input-pie-chart-data';
 
 @Component({

@@ -1,5 +1,5 @@
 import { BoardEntity } from '@firestone-hs/simulate-bgs-battle/dist/board-entity';
-import { NonFunctionProperties } from '../../../../services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { BgsFaceOffWithSimulation } from '../../../battlegrounds/bgs-face-off-with-simulation';
 
 export class BgsCustomSimulationState {

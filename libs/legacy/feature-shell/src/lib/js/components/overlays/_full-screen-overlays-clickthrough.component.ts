@@ -9,7 +9,7 @@ import {
 	ViewEncapsulation,
 } from '@angular/core';
 import { GameType } from '@firestone-hs/reference-data';
-import { sleep } from '@services/utils';
+import { sleep } from '@firestone/shared/utils';
 import { Observable } from 'rxjs';
 import { CurrentAppType } from '../../models/mainwindow/current-app.type';
 import { DebugService } from '../../services/debug.service';

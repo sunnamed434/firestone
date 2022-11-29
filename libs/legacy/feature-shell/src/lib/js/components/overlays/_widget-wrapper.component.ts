@@ -1,6 +1,6 @@
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
-import { sleep } from '@services/utils';
+import { sleep } from '@firestone/shared/utils';
 import { Observable, pipe, UnaryFunction } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Preferences } from '../../models/preferences';
@@ -119,7 +119,9 @@ export abstract class AbstractWidgetWrapperComponent extends AbstractSubscriptio
 		return boundPositionFromPrefs;
 	}
 
-	startDragging() {}
+	startDragging() {
+		// Do nothing
+	}
 
 	async stopDragging() {
 		// Do nothing for now

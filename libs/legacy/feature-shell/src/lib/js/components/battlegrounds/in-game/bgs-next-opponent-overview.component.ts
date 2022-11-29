@@ -1,4 +1,5 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { deepEqual } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { BehaviorSubject, combineLatest, from, Observable } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
@@ -8,7 +9,6 @@ import { BgsNextOpponentOverviewPanel } from '../../../models/battlegrounds/in-g
 import { AdService } from '../../../services/ad.service';
 import { normalizeHeroCardId } from '../../../services/battlegrounds/bgs-utils';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { deepEqual } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 
 @Component({

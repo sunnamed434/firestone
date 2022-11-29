@@ -7,6 +7,7 @@ import {
 	EventEmitter,
 } from '@angular/core';
 import { BattleResultHistory, BgsBattleSimulationResult } from '@firestone-hs/hs-replay-xml-parser/dist/public-api';
+import { deepEqual } from '@firestone/shared/utils';
 import { BgsBattleSimulationUpdateEvent } from '@services/battlegrounds/store/events/bgs-battle-simulation-update-event';
 import { BgsSelectBattleEvent } from '@services/battlegrounds/store/events/bgs-select-battle-event';
 import { BattlegroundsStoreEvent } from '@services/battlegrounds/store/events/_battlegrounds-store-event';
@@ -18,7 +19,6 @@ import { BgsPanel } from '../../../models/battlegrounds/bgs-panel';
 import { BgsBattlesPanel } from '../../../models/battlegrounds/in-game/bgs-battles-panel';
 import { BgsBattleSimulationResetEvent } from '../../../services/battlegrounds/store/events/bgs-battle-simulation-reset-event';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { deepEqual } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 
 @Component({

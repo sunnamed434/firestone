@@ -7,8 +7,8 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
+import { sortByProperties } from '@firestone/shared/utils';
 import { SetCard } from '@models/set';
-import { sortByProperties } from '../../../../services/utils';
 
 @Component({
 	selector: 'duels-bucket-cards-list',

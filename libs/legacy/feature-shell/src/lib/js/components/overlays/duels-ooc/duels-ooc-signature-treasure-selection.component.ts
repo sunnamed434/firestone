@@ -8,6 +8,7 @@ import {
 	normalizeDuelsHeroCardId,
 	ReferenceCard,
 } from '@firestone-hs/reference-data';
+import { groupByFunction, uuid } from '@firestone/shared/utils';
 import { DuelsHeroPlayerStat } from '@models/duels/duels-player-stats';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { AppUiStoreFacadeService } from '@services/ui-store/app-ui-store-facade.service';
@@ -18,7 +19,6 @@ import {
 	getDuelsMmrFilterNumber,
 	topDeckApplyFilters,
 } from '@services/ui-store/duels-ui-helper';
-import { groupByFunction, uuid } from '@services/utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 

@@ -1,4 +1,4 @@
-import { NonFunctionProperties } from '../../../services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { DecktrackerViewType } from '../decktracker/decktracker-view.type';
 
 export class NavigationDecktracker {

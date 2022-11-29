@@ -7,6 +7,7 @@ import {
 	ViewRef,
 } from '@angular/core';
 import { ReferenceCard } from '@firestone-hs/reference-data';
+import { groupByFunction, sortByProperties } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { combineLatest, Observable } from 'rxjs';
 import { Card } from '../../models/card';
@@ -21,7 +22,6 @@ import { MercenariesReferenceData } from '../../services/mercenaries/mercenaries
 import { normalizeMercenariesCardId } from '../../services/mercenaries/mercenaries-utils';
 import { OverwolfService } from '../../services/overwolf.service';
 import { AppUiStoreFacadeService } from '../../services/ui-store/app-ui-store-facade.service';
-import { groupByFunction, sortByProperties } from '../../services/utils';
 import { AbstractSubscriptionComponent } from '../abstract-subscription.component';
 import { CollectionReferenceCard } from './collection-reference-card';
 

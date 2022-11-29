@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RewardTrackType } from '@firestone-hs/reference-data';
+import { sleep } from '@firestone/shared/utils';
 import { MemoryUpdate } from '../../models/memory/memory-update';
 import { RewardsTrackInfo } from '../../models/rewards-track-info';
 import { Events } from '../events.service';
@@ -7,7 +8,6 @@ import { GameEventsEmitterService } from '../game-events-emitter.service';
 import { MemoryInspectionService } from '../plugins/memory-inspection.service';
 import { Season6 } from '../stats/xp/xp-tables/season-6';
 import { Season } from '../stats/xp/xp-tables/_season';
-import { sleep } from '../utils';
 
 @Injectable()
 export class RewardMonitorService {

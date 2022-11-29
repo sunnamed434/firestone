@@ -1,8 +1,8 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { AbstractSubscriptionComponent } from '@components/abstract-subscription.component';
+import { Mail } from '@legacy-import/src/lib/libs/mails/mail-state';
 import { AppUiStoreFacadeService } from '@services/ui-store/app-ui-store-facade.service';
 import { Observable } from 'rxjs';
-import { Mail } from '../../mail-state';
 import { MailboxMarkMessageReadEvent } from '../../services/mailbox-mark-message-read-event';
 
 @Component({

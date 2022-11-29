@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Entity } from '@firestone-hs/hs-replay-xml-parser/dist/public-api';
 import { GameTag, SceneMode } from '@firestone-hs/reference-data';
+import { deepEqual } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
@@ -23,7 +24,6 @@ import { Preferences } from '../../models/preferences';
 import { Message, OwNotificationsService } from '../notifications.service';
 import { PreferencesService } from '../preferences.service';
 import { AppUiStoreFacadeService } from '../ui-store/app-ui-store-facade.service';
-import { deepEqual } from '../utils';
 
 const CLIENT_ID = 'jbmhw349lqbus9j8tx4wac18nsja9u';
 const REDIRECT_URI = 'https://www.firestoneapp.com/twitch-login.html';

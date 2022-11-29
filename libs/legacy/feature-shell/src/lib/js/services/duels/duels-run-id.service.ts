@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { uuid } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, filter, map, startWith } from 'rxjs/operators';
@@ -8,7 +9,6 @@ import { DuelsInfo } from '../../models/memory/memory-duels';
 import { DuelsStateBuilderService } from '../duels/duels-state-builder.service';
 import { isDuels, isSignatureTreasure } from '../duels/duels-utils';
 import { AppUiStoreFacadeService } from '../ui-store/app-ui-store-facade.service';
-import { uuid } from '../utils';
 
 @Injectable()
 export class DuelsRunIdService {

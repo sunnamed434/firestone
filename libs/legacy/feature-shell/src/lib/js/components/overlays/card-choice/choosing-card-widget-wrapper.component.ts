@@ -10,6 +10,7 @@ import {
 	ViewRef,
 } from '@angular/core';
 import { CardIds, ReferenceCard, SceneMode } from '@firestone-hs/reference-data';
+import { uuid } from '@firestone/shared/utils';
 import { combineLatest, Observable } from 'rxjs';
 import { DeckCard } from '../../../models/decktracker/deck-card';
 import { CardOption } from '../../../models/decktracker/deck-state';
@@ -20,7 +21,6 @@ import { LocalizationFacadeService } from '../../../services/localization-facade
 import { OverwolfService } from '../../../services/overwolf.service';
 import { PreferencesService } from '../../../services/preferences.service';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { uuid } from '../../../services/utils';
 import { AbstractWidgetWrapperComponent } from '../_widget-wrapper.component';
 import { buildCardChoiceValue } from './card-choice-values';
 

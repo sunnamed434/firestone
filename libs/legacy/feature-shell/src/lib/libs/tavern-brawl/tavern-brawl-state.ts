@@ -1,5 +1,5 @@
 import { TavernBrawlStats } from '@firestone-hs/tavern-brawl-stats';
-import { NonFunctionProperties } from '@services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { AppInjector } from '../../js/services/app-injector';
 import { LazyDataInitService } from '../../js/services/lazy-data-init.service';
 

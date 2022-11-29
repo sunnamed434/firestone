@@ -1,4 +1,5 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { groupByFunction, sumOnArray } from '@firestone/shared/utils';
 import { combineLatest, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { BgsHeroStat, BgsHeroTier, BgsQuestStat } from '../../../../models/battlegrounds/stats/bgs-hero-stat';
@@ -6,7 +7,6 @@ import { CardsFacadeService } from '../../../../services/cards-facade.service';
 import { LocalizationFacadeService } from '../../../../services/localization-facade.service';
 import { AppUiStoreFacadeService } from '../../../../services/ui-store/app-ui-store-facade.service';
 import { buildQuestStats } from '../../../../services/ui-store/bgs-ui-helper';
-import { groupByFunction, sumOnArray } from '../../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../../abstract-subscription.component';
 import { getBgsRankFilterLabelFor } from '../filters/battlegrounds-rank-filter-dropdown.component';
 import { getBgsTimeFilterLabelFor } from '../filters/battlegrounds-time-filter-dropdown.component';

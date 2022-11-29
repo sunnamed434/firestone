@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { AfterViewInit, ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ReferenceCard } from '@firestone-hs/reference-data';
+import { uuid } from '@firestone/shared/utils';
 import { DeckCard } from '@models/decktracker/deck-card';
 import { VisualDeckCard } from '@models/decktracker/visual-deck-card';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { CardsHighlightFacadeService } from '@services/decktracker/card-highlight/cards-highlight-facade.service';
-import { uuid } from '@services/utils';
 
 @Component({
 	selector: 'hero-power-overlay',

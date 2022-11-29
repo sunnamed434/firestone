@@ -1,4 +1,5 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
+import { sortByProperties } from '@firestone/shared/utils';
 import {
 	CollectionCardClassFilterType,
 	CollectionCardOwnedFilterType,
@@ -8,7 +9,6 @@ import { combineLatest, Observable } from 'rxjs';
 import { Card } from '../../models/card';
 import { Set, SetCard } from '../../models/set';
 import { AppUiStoreFacadeService } from '../../services/ui-store/app-ui-store-facade.service';
-import { sortByProperties } from '../../services/utils';
 import { AbstractSubscriptionComponent } from '../abstract-subscription.component';
 
 export const DEFAULT_CARD_WIDTH = 170;
@@ -46,11 +46,7 @@ export const DEFAULT_CARD_HEIGHT = 240;
 			</ng-container>
 
 			<ng-template #emptyState>
-				<collection-empty-state
-					[set]="_set"
-					[searchString]="_searchString"
-				>
-				</collection-empty-state>
+				<collection-empty-state [set]="_set" [searchString]="_searchString"> </collection-empty-state>
 			</ng-template>
 		</div>
 	`,

@@ -1,7 +1,7 @@
 import { DeckStat } from '@firestone-hs/deck-stats';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { AppInjector } from '../../../services/app-injector';
 import { LazyDataInitService } from '../../../services/lazy-data-init.service';
-import { NonFunctionProperties } from '../../../services/utils';
 import { ConstructedConfig } from '../../decktracker/constructed-config';
 import { PatchInfo } from '../../patches';
 import { ConstructedDeckbuilder } from './constructed-deckbuilder';

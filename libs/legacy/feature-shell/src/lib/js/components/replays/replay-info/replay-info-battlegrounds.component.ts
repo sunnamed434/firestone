@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Entity, EntityAsJS, EntityDefinition } from '@firestone-hs/replay-parser';
+import { capitalizeEachWord } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { MinionStat } from '../../../models/battlegrounds/post-match/minion-stat';
 import { RunStep } from '../../../models/duels/run-step';
@@ -11,7 +12,6 @@ import { LocalizationFacadeService } from '../../../services/localization-facade
 import { ShowReplayEvent } from '../../../services/mainwindow/store/events/replays/show-replay-event';
 import { TriggerShowMatchStatsEvent } from '../../../services/mainwindow/store/events/replays/trigger-show-match-stats-event';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { capitalizeEachWord } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 import { normalizeCardId } from '../../battlegrounds/post-match/card-utils';
 import { extractTime } from './replay-info-ranked.component';
@@ -67,7 +67,7 @@ declare let amplitude;
 
 				<div
 					class="group mmr"
-					[ngClass]="{ 'positive': deltaMmr > 0, 'negative': deltaMmr < 0 }"
+					[ngClass]="{ positive: deltaMmr > 0, negative: deltaMmr < 0 }"
 					*ngIf="deltaMmr != null"
 				>
 					<div class="value">{{ deltaMmr }}</div>
@@ -246,7 +246,7 @@ export class ReplayInfoBattlegroundsComponent extends AbstractSubscriptionCompon
 		const boardEntities = bgsBoard.board.map((boardEntity) =>
 			boardEntity instanceof Entity || boardEntity.tags instanceof Map
 				? Entity.create(new Entity(), boardEntity as EntityDefinition)
-				: Entity.fromJS((boardEntity as unknown) as EntityAsJS),
+				: Entity.fromJS(boardEntity as unknown as EntityAsJS),
 		) as readonly Entity[];
 		const normalizedIds = [
 			...new Set(boardEntities.map((entity) => normalizeCardId(entity.cardID, this.allCards))),

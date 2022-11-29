@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { sleep } from '@firestone/shared/utils';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
 import { CardsFacadeService } from './cards-facade.service';
@@ -6,7 +7,6 @@ import { formatClass } from './hs-utils';
 import { LocalizationFacadeService } from './localization-facade.service';
 import { OverwolfService } from './overwolf.service';
 import { AppUiStoreFacadeService } from './ui-store/app-ui-store-facade.service';
-import { sleep } from './utils';
 
 @Injectable()
 export class LocalizationService {

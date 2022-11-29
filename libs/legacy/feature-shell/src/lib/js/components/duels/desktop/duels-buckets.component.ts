@@ -1,13 +1,13 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CardClass } from '@firestone-hs/reference-data';
+import { sumOnArray } from '@firestone/shared/utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { CardsFacadeService } from '../../../services/cards-facade.service';
 import { classes } from '../../../services/hs-utils';
 import { LocalizationFacadeService } from '../../../services/localization-facade.service';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { sumOnArray } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 import { BucketCard } from './deckbuilder/duels-bucket-cards-list.component';
 import { BucketData } from './deckbuilder/duels-deckbuilder-cards.component';
@@ -33,7 +33,7 @@ export const DEFAULT_CARD_HEIGHT = 221;
 				<div class="bucket-class-filters">
 					<button
 						class="bucket-class-filter"
-						[ngClass]="{ 'active': isActive(playerClass) }"
+						[ngClass]="{ active: isActive(playerClass) }"
 						*ngFor="let playerClass of classOptions"
 						role="listitem"
 						tabindex="0"

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { decode, encode } from '@firestone-hs/deckstrings';
 import { DuelsRewardsInfo } from '@firestone-hs/retrieve-users-duels-runs/dist/duels-rewards-info';
 import { DuelsRunInfo } from '@firestone-hs/retrieve-users-duels-runs/dist/duels-run-info';
+import { arraysEqual, deepEqual, groupByFunction } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { getDuelsModeName, isDuels } from '@services/duels/duels-utils';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -22,7 +23,6 @@ import { GameStat } from '../../models/mainwindow/stats/game-stat';
 import { formatClass } from '../hs-utils';
 import { LocalizationFacadeService } from '../localization-facade.service';
 import { AppUiStoreFacadeService } from '../ui-store/app-ui-store-facade.service';
-import { arraysEqual, deepEqual, groupByFunction } from '../utils';
 
 @Injectable()
 export class DuelsDecksProviderService {
@@ -128,7 +128,7 @@ export class DuelsDecksProviderService {
 				const deckDefinition = decode(firstMatch.initialDeckList);
 				const updatedDeckDefinition = sanitizeDeckstring(deckDefinition, this.allCards);
 				const sanitizedDeckstring = encode(updatedDeckDefinition);
-				return ({
+				return {
 					...mainStats,
 					initialDeckList: sanitizedDeckstring,
 					heroCardId: heroCardId,
@@ -139,7 +139,7 @@ export class DuelsDecksProviderService {
 					runs: groupedByDecklist[deckstring],
 					debug1: deckDefinition,
 					debug2: updatedDeckDefinition,
-				} as any) as DuelsDeckSummary;
+				} as any as DuelsDeckSummary;
 			});
 		for (const personalDeck of duelsPersonalAdditionalDecks) {
 			if (decks.find((deck) => deck.initialDeckList === personalDeck.initialDeckList)) {
@@ -180,9 +180,7 @@ export class DuelsDecksProviderService {
 		return duelsPersonalDeckNames[initialDeckList] ?? null;
 	}
 
-	private buildMainPersonalDecktats(
-		runs: readonly DuelsRun[],
-	): {
+	private buildMainPersonalDecktats(runs: readonly DuelsRun[]): {
 		readonly global: DuelsDeckStatInfo;
 		readonly heroPowerStats: readonly HeroPowerDuelsDeckStatInfo[];
 		readonly signatureTreasureStats: readonly SignatureTreasureDuelsDeckStatInfo[];
@@ -281,10 +279,9 @@ export class DuelsDecksProviderService {
 		const sortedMatches = [...matchesForRun].sort((a, b) => (a.creationTimestamp <= b.creationTimestamp ? -1 : 1));
 		const firstMatch = this.getFirstMatchForRun(sortedMatches);
 		const sortedInfo = [...runInfo].sort((a, b) => (a.creationTimestamp <= b.creationTimestamp ? -1 : 1));
-		const steps: readonly (GameStat | DuelsRunInfo)[] = [
-			...(sortedMatches || []),
-			...(sortedInfo || []),
-		].sort((a, b) => (a.creationTimestamp <= b.creationTimestamp ? -1 : 1));
+		const steps: readonly (GameStat | DuelsRunInfo)[] = [...(sortedMatches || []), ...(sortedInfo || [])].sort(
+			(a, b) => (a.creationTimestamp <= b.creationTimestamp ? -1 : 1),
+		);
 		const [wins, losses] = this.extractWins(sortedMatches);
 		let normalizedDeckstring = firstMatch?.playerDecklist;
 		if (!!firstMatch?.playerDecklist) {

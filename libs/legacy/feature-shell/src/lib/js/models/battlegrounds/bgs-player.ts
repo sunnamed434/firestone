@@ -1,9 +1,9 @@
 import { BgsPlayer as IBgsPlayer, Entity } from '@firestone-hs/hs-replay-xml-parser/dist/public-api';
-import { Entity as ReplayEntity } from '@firestone-hs/replay-parser';
 import { CardIds, GameTag } from '@firestone-hs/reference-data';
+import { Entity as ReplayEntity } from '@firestone-hs/replay-parser';
 import { BoardEntity } from '@firestone-hs/simulate-bgs-battle/dist/board-entity';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
-import { NonFunctionProperties } from '@services/utils';
 import { getHeroPower, normalizeHeroCardId } from '../../services/battlegrounds/bgs-utils';
 import { BgsBattleHistory } from './in-game/bgs-battle-history';
 import { BgsBoard } from './in-game/bgs-board';

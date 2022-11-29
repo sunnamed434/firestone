@@ -1,4 +1,4 @@
-import { NonFunctionProperties } from '../utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 
 export class GameNativeState {
 	readonly isFriendsListOpen: boolean;

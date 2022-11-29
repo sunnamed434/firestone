@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { sleep } from '@firestone/shared/utils';
 import { OverwolfService } from '@services/overwolf.service';
 import { Action, CurrentState } from '@services/plugins/mind-vision/mind-vision-actions';
 import { MindVisionFacadeService } from '@services/plugins/mind-vision/mind-vision-facade.service';
 import { MindVisionState } from '@services/plugins/mind-vision/states/_mind-vision-state';
-import { sleep } from '@services/utils';
 
 export class MindVisionStateListening implements MindVisionState {
 	private abortController = new AbortController();

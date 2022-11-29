@@ -1,4 +1,4 @@
-import { NonFunctionProperties } from '@services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { DuelsCategoryType } from '../duels/duels-category.type';
 
 export class NavigationDuels {

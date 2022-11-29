@@ -11,6 +11,7 @@ import { AbstractSubscriptionComponent } from '@components/abstract-subscription
 import { CurrentSessionBgsBoardTooltipComponent } from '@components/overlays/session/current-session-bgs-board-tooltip.component';
 import { GameType } from '@firestone-hs/reference-data';
 import { Entity } from '@firestone-hs/replay-parser';
+import { groupByFunction } from '@firestone/shared/utils';
 import { GameStat } from '@models/mainwindow/stats/game-stat';
 import { Preferences } from '@models/preferences';
 import { isBattlegrounds, isBattlegroundsScene, normalizeHeroCardId } from '@services/battlegrounds/bgs-utils';
@@ -18,7 +19,6 @@ import { CardsFacadeService } from '@services/cards-facade.service';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { GenericPreferencesUpdateEvent } from '@services/mainwindow/store/events/generic-preferences-update-event';
 import { AppUiStoreFacadeService } from '@services/ui-store/app-ui-store-facade.service';
-import { groupByFunction } from '@services/utils';
 import { combineLatest, from, Observable } from 'rxjs';
 
 @Component({
@@ -78,8 +78,8 @@ import { combineLatest, from, Observable } from 'rxjs';
 									class="delta"
 									*ngIf="deltaRank != null"
 									[ngClass]="{
-										'positive': deltaRank > 0,
-										'negative': deltaRank < 0
+										positive: deltaRank > 0,
+										negative: deltaRank < 0
 									}"
 									[helpTooltip]="'session.summary.delta-mmr-tooltip' | owTranslate"
 								>

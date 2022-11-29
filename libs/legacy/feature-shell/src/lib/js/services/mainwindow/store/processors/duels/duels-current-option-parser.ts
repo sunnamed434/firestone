@@ -1,4 +1,5 @@
 import { DungeonCrawlOptionType } from '@firestone-hs/reference-data';
+import { sleep } from '@firestone/shared/utils';
 import { MainWindowState } from '@models/mainwindow/main-window-state';
 import { NavigationState } from '@models/mainwindow/navigation/navigation-state';
 import { MemoryDuelsHeroPowerOption } from '@models/memory/memory-duels';
@@ -6,7 +7,6 @@ import { CardsFacadeService } from '@services/cards-facade.service';
 import { DuelsCurrentOptionEvent } from '@services/mainwindow/store/events/duels/duels-current-option-event';
 import { Processor } from '@services/mainwindow/store/processors/processor';
 import { MemoryInspectionService } from '@services/plugins/memory-inspection.service';
-import { sleep } from '@services/utils';
 
 export class DuelsCurrentOptionParser implements Processor {
 	constructor(private readonly allCards: CardsFacadeService, private readonly memory: MemoryInspectionService) {}

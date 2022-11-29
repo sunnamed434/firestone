@@ -1,5 +1,5 @@
 import { PackResult } from '@firestone-hs/user-packs';
-import { NonFunctionProperties } from '../../services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { Card } from '../card';
 import { CardBack } from '../card-back';
 import { CardHistory } from '../card-history';

@@ -1,5 +1,5 @@
 import { CardIds } from '@firestone-hs/reference-data';
-import { sumOnArray } from '@services/utils';
+import { sumOnArray } from '@firestone/shared/utils';
 import { GameState } from '../../../models/decktracker/game-state';
 import { LocalizationFacadeService } from '../../../services/localization-facade.service';
 import { CounterDefinition } from './_counter-definition';

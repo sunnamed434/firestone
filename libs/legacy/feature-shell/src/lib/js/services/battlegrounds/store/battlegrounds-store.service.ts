@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { sleep } from '@firestone/shared/utils';
 import { BgsBuddyGainedParser } from '@services/battlegrounds/store/event-parsers/bgs-buddy-gained-parser';
 import { BgsBuddyGainedEvent } from '@services/battlegrounds/store/events/bgs-buddy-gained-event';
 import { CardsFacadeService } from '@services/cards-facade.service';
@@ -26,7 +27,6 @@ import { MemoryInspectionService } from '../../plugins/memory-inspection.service
 import { OwUtilsService } from '../../plugins/ow-utils.service';
 import { PreferencesService } from '../../preferences.service';
 import { ProcessingQueue } from '../../processing-queue.service';
-import { sleep } from '../../utils';
 import { BgsBattleSimulationService } from '../bgs-battle-simulation.service';
 import { BgsBestUserStatsService } from '../bgs-best-user-stats.service';
 import { BgsRunStatsService } from '../bgs-run-stats.service';

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SceneMode } from '@firestone-hs/reference-data';
+import { deepEqual, sleep } from '@firestone/shared/utils';
 import { Subject } from 'rxjs';
 import { MemoryMercenariesCollectionInfo, MemoryVisitor } from '../../models/memory/memory-mercenaries-collection-info';
 import { MemoryMercenariesInfo } from '../../models/memory/memory-mercenaries-info';
@@ -8,7 +9,6 @@ import { Events } from '../events.service';
 import { LocalStorageService } from '../local-storage';
 import { MemoryInspectionService } from '../plugins/memory-inspection.service';
 import { PreferencesService } from '../preferences.service';
-import { deepEqual, sleep } from '../utils';
 
 export const MERCENARIES_SCENES = [
 	SceneMode.LETTUCE_BOUNTY_BOARD,

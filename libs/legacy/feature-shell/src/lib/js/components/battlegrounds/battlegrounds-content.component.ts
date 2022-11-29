@@ -7,6 +7,7 @@ import {
 	HostListener,
 	OnDestroy,
 } from '@angular/core';
+import { deepEqual } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
@@ -14,7 +15,6 @@ import { BgsFaceOffWithSimulation } from '../../models/battlegrounds/bgs-face-of
 import { BgsPanel } from '../../models/battlegrounds/bgs-panel';
 import { OverwolfService } from '../../services/overwolf.service';
 import { AppUiStoreFacadeService } from '../../services/ui-store/app-ui-store-facade.service';
-import { deepEqual } from '../../services/utils';
 import { AbstractSubscriptionComponent } from '../abstract-subscription.component';
 
 @Component({

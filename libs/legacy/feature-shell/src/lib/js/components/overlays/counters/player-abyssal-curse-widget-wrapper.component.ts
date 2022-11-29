@@ -7,7 +7,7 @@ import {
 	Renderer2,
 } from '@angular/core';
 import { CardIds } from '@firestone-hs/reference-data';
-import { sumOnArray } from '@services/utils';
+import { sumOnArray } from '@firestone/shared/utils';
 import { CardsFacadeService } from '../../../services/cards-facade.service';
 import { OverwolfService } from '../../../services/overwolf.service';
 import { PreferencesService } from '../../../services/preferences.service';
@@ -22,7 +22,8 @@ import { AbstractCounterWidgetWrapperComponent, templateBase } from './abstract-
 })
 export class PlayerAbyssalCurseWidgetWrapperComponent
 	extends AbstractCounterWidgetWrapperComponent
-	implements AfterContentInit {
+	implements AfterContentInit
+{
 	constructor(
 		private readonly allCards: CardsFacadeService,
 		protected readonly ow: OverwolfService,

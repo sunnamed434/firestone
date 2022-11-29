@@ -1,13 +1,13 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { BoosterType } from '@firestone-hs/reference-data';
 import { PackResult } from '@firestone-hs/user-packs';
+import { sortByProperties, sumOnArray } from '@firestone/shared/utils';
 import { combineLatest, Observable } from 'rxjs';
 import { AbstractSubscriptionComponent } from '../../../js/components/abstract-subscription.component';
 import { sets } from '../../../js/services/collection/sets.ref';
 import { boosterIdToBoosterName, boosterIdToSetId, getPackDustValue } from '../../../js/services/hs-utils';
 import { LocalizationFacadeService } from '../../../js/services/localization-facade.service';
 import { AppUiStoreFacadeService } from '../../../js/services/ui-store/app-ui-store-facade.service';
-import { sortByProperties, sumOnArray } from '../../../js/services/utils';
 import { InternalPackInfo } from './pack-stat.component';
 
 @Component({
@@ -19,7 +19,7 @@ import { InternalPackInfo } from './pack-stat.component';
 				{{ 'app.collection.pack-stats.title' | owTranslate: { value: totalPacks$ | async } }}
 				<preference-toggle
 					class="show-buyable-packs"
-					[ngClass]="{ 'active': showOnlyBuyablePacks$ | async }"
+					[ngClass]="{ active: showOnlyBuyablePacks$ | async }"
 					field="collectionShowOnlyBuyablePacks"
 					[label]="'settings.collection.pack-stats-show-only-buyable-packs' | owTranslate"
 					[helpTooltip]="'settings.collection.pack-stats-show-only-buyable-packs-tooltip' | owTranslate"

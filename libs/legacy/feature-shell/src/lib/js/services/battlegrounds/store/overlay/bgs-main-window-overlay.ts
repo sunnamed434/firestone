@@ -1,8 +1,8 @@
+import { isWindowClosed } from '@firestone/shared/utils';
 import { BattlegroundsState } from '../../../../models/battlegrounds/battlegrounds-state';
 import { Preferences } from '../../../../models/preferences';
 import { OverwolfService } from '../../../overwolf.service';
 import { PreferencesService } from '../../../preferences.service';
-import { isWindowClosed } from '../../../utils';
 import { BattlegroundsStoreEvent } from '../events/_battlegrounds-store-event';
 import { BattlegroundsOverlay } from './battlegrounds-overlay';
 

@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { DeckDefinition, DeckList, decode } from '@firestone-hs/deckstrings';
 import { GameFormat } from '@firestone-hs/reference-data';
+import { deepEqual, groupByFunction, removeFromArray, sumOnArray } from '@firestone/shared/utils';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { DeckFilters } from '../../../models/mainwindow/decktracker/deck-filters';
@@ -17,7 +18,6 @@ import { PatchInfo } from '../../../models/patches';
 import { CardsFacadeService } from '../../cards-facade.service';
 import { classes } from '../../hs-utils';
 import { AppUiStoreFacadeService } from '../../ui-store/app-ui-store-facade.service';
-import { deepEqual, groupByFunction, removeFromArray, sumOnArray } from '../../utils';
 
 @Injectable()
 export class DecksProviderService {

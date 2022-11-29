@@ -1,4 +1,4 @@
-import { NonFunctionProperties } from '../../../services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { CurrentView } from '../achievement/current-view.type';
 import { BgsHeroStatsFilterId } from '../battlegrounds/categories/bgs-hero-stats-filter-id';
 

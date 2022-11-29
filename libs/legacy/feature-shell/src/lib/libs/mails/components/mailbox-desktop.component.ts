@@ -1,9 +1,9 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { AbstractSubscriptionComponent } from '@components/abstract-subscription.component';
+import { MailCategoryType } from '@legacy-import/src/lib/libs/mails/mail-state';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { AppUiStoreFacadeService } from '@services/ui-store/app-ui-store-facade.service';
 import { Observable } from 'rxjs';
-import { MailCategoryType } from '../mail-state';
 
 @Component({
 	selector: 'mailbox-desktop',
@@ -20,7 +20,7 @@ import { MailCategoryType } from '../mail-state';
 					<ul class="menu-selection" *ngIf="menuDisplayType.value === 'menu'">
 						<li
 							*ngFor="let cat of categories$ | async"
-							[ngClass]="{ 'selected': cat === value.category }"
+							[ngClass]="{ selected: cat === value.category }"
 							(mousedown)="selectCategory(cat)"
 						>
 							<span>{{ getName(cat) }}</span>

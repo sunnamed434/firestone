@@ -1,7 +1,7 @@
 import { PresenceResult } from '@firestone-hs/twitch-presence';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { AppInjector } from '../../../services/app-injector';
 import { LazyDataInitService } from '../../../services/lazy-data-init.service';
-import { NonFunctionProperties } from '../../../services/utils';
 import { StreamsCategoryType } from './streams.type';
 
 export class StreamsState {

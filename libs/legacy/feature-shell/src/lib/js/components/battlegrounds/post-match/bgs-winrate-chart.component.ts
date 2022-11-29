@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
 import { BattleResultHistory } from '@firestone-hs/hs-replay-xml-parser/dist/public-api';
+import { deepEqual } from '@firestone/shared/utils';
 import { NumericTurnInfo } from '../../../models/battlegrounds/post-match/numeric-turn-info';
 import { BgsHeroStat, BgsQuestStat } from '../../../models/battlegrounds/stats/bgs-hero-stat';
-import { deepEqual } from '../../../services/utils';
 
 @Component({
 	selector: 'bgs-winrate-chart',

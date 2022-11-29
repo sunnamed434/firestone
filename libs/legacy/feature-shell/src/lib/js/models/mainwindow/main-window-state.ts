@@ -1,8 +1,8 @@
 import { GlobalStats } from '@firestone-hs/build-global-stats/dist/model/global-stats';
 import { SceneMode } from '@firestone-hs/reference-data';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { AppInjector } from '../../services/app-injector';
 import { LazyDataInitService } from '../../services/lazy-data-init.service';
-import { NonFunctionProperties } from '../../services/utils';
 import { ArenaState } from '../arena/arena-state';
 import { DuelsState } from '../duels/duels-state';
 import { MercenariesState } from '../mercenaries/mercenaries-state';

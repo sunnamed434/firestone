@@ -1,4 +1,4 @@
-import { NonFunctionProperties } from '../../../services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { MercenariesCategoryId } from '../../mercenaries/mercenary-category-id.type';
 
 export class NavigationMercenaries {

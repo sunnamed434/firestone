@@ -1,9 +1,9 @@
 import { BgsFaceOff } from '@firestone-hs/hs-replay-xml-parser/dist/lib/model/bgs-face-off';
 import { BgsBattleInfo } from '@firestone-hs/simulate-bgs-battle/dist/bgs-battle-info';
 import { SimulationResult } from '@firestone-hs/simulate-bgs-battle/dist/simulation-result';
+import { NonFunctionProperties, uuid } from '@firestone/shared/utils';
 import { captureEvent } from '@sentry/browser';
 import { isSupportedScenario } from '../../services/battlegrounds/bgs-utils';
-import { NonFunctionProperties, uuid } from '../../services/utils';
 import { BattleInfoMessage } from './battle-info-message.type';
 import { BgsGame } from './bgs-game';
 

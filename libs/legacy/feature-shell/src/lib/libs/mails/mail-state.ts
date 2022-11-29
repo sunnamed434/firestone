@@ -1,5 +1,5 @@
 import { MailboxMessage } from '@firestone-hs/mailbox';
-import { NonFunctionProperties } from '@services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 
 export class MailState {
 	readonly mails: readonly Mail[] = [];

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { groupByFunction } from '@firestone/shared/utils';
 import { BgsTriple } from '../../../models/battlegrounds/in-game/bgs-triple';
 import { LocalizationFacadeService } from '../../../services/localization-facade.service';
-import { groupByFunction } from '../../../services/utils';
 
 @Component({
 	selector: 'bgs-triples',

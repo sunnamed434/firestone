@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { sleep } from '@firestone/shared/utils';
 import { MemoryUpdate } from '@models/memory/memory-update';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { OwNotificationsService } from '@services/notifications.service';
@@ -12,7 +13,6 @@ import { MindVisionStateListening } from '@services/plugins/mind-vision/states/m
 import { MindVisionStateReset } from '@services/plugins/mind-vision/states/mind-vision-state-reset';
 import { MindVisionStateTearDown } from '@services/plugins/mind-vision/states/mind-vision-state-tear-down';
 import { MindVisionState } from '@services/plugins/mind-vision/states/_mind-vision-state';
-import { sleep } from '@services/utils';
 import { BehaviorSubject } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { Events } from '../../events.service';

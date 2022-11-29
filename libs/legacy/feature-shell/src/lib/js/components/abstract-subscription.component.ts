@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, HostListener, Injectable, OnDestroy, ViewRef } from '@angular/core';
+import { arraysEqual } from '@firestone/shared/utils';
 import { Observable, pipe, Subject, UnaryFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
 import { Preferences } from '../models/preferences';
 import { AppUiStoreFacadeService } from '../services/ui-store/app-ui-store-facade.service';
-import { arraysEqual } from '../services/utils';
 
 @Injectable()
 export abstract class AbstractSubscriptionComponent implements OnDestroy {

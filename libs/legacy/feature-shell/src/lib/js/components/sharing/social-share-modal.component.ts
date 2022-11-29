@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { capitalizeEachWord } from '@firestone/shared/utils';
 import { SocialUserInfo } from '../../models/mainwindow/social-user-info';
-import { capitalizeEachWord } from '../../services/utils';
 
 @Component({
 	selector: 'social-share-modal',

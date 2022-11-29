@@ -8,6 +8,7 @@ import {
 	ViewChild,
 	ViewRef,
 } from '@angular/core';
+import { groupByFunction } from '@firestone/shared/utils';
 import { VirtualScrollerComponent } from 'ngx-virtual-scroller';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
@@ -15,7 +16,6 @@ import { DuelsRun } from '../../../models/duels/duels-run';
 import { LocalizationFacadeService } from '../../../services/localization-facade.service';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
 import { filterDuelsRuns } from '../../../services/ui-store/duels-ui-helper';
-import { groupByFunction } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 
 @Component({

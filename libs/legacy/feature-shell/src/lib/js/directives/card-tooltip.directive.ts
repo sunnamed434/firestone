@@ -10,10 +10,10 @@ import {
 	OnDestroy,
 	ViewRef,
 } from '@angular/core';
+import { sleep } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { CardTooltipComponent } from '../components/tooltip/card-tooltip.component';
 import { DeckCard } from '../models/decktracker/deck-card';
-import { sleep } from '../services/utils';
 import { CardTooltipPositionType } from './card-tooltip-position.type';
 
 @Directive({

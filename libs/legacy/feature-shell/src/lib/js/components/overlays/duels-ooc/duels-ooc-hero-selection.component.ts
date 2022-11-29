@@ -2,6 +2,7 @@ import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component
 import { AbstractSubscriptionComponent } from '@components/abstract-subscription.component';
 import { DuelsHeroInfo, DuelsHeroInfoTopDeck } from '@components/overlays/duels-ooc/duels-hero-info';
 import { allDuelsHeroes, normalizeDuelsHeroCardId, ReferenceCard } from '@firestone-hs/reference-data';
+import { groupByFunction, uuid } from '@firestone/shared/utils';
 import { DuelsHeroPlayerStat } from '@models/duels/duels-player-stats';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { AppUiStoreFacadeService } from '@services/ui-store/app-ui-store-facade.service';
@@ -13,7 +14,6 @@ import {
 	mergeDuelsHeroPlayerStats,
 	topDeckApplyFilters,
 } from '@services/ui-store/duels-ui-helper';
-import { groupByFunction, uuid } from '@services/utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 

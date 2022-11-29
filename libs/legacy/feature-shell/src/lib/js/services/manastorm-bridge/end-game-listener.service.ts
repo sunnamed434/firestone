@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { sleep } from '@firestone/shared/utils';
 import { BehaviorSubject, combineLatest, merge } from 'rxjs';
 import { distinctUntilChanged, filter, map, startWith, tap } from 'rxjs/operators';
 import { ArenaInfo } from '../../models/arena-info';
@@ -19,7 +20,6 @@ import { MercenariesMemoryCacheService } from '../mercenaries/mercenaries-memory
 import { MemoryInspectionService } from '../plugins/memory-inspection.service';
 import { ReviewIdService } from '../review-id.service';
 import { RewardMonitorService } from '../rewards/rewards-monitor';
-import { sleep } from '../utils';
 import { EndGameUploaderService, UploadInfo } from './end-game-uploader.service';
 
 @Injectable()

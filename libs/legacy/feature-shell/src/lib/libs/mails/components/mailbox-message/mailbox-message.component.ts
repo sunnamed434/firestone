@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { capitalizeFirstLetter } from '@firestone/shared/utils';
+import { Mail } from '@legacy-import/src/lib/libs/mails/mail-state';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
-import { capitalizeFirstLetter } from '../../../../js/services/utils';
-import { Mail } from '../../mail-state';
 
 @Component({
 	selector: 'mailbox-message',

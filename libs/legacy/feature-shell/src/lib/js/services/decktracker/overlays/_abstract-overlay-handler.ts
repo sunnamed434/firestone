@@ -1,3 +1,4 @@
+import { isWindowClosed } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { GameState } from '../../../models/decktracker/game-state';
 import { GameStateEvent } from '../../../models/decktracker/game-state-event';
@@ -5,7 +6,6 @@ import { GameEvent } from '../../../models/game-event';
 import { Preferences } from '../../../models/preferences';
 import { OverwolfService } from '../../overwolf.service';
 import { PreferencesService } from '../../preferences.service';
-import { isWindowClosed } from '../../utils';
 import { OverlayHandler } from './overlay-handler';
 
 export abstract class AbstractOverlayHandler implements OverlayHandler {

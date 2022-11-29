@@ -1,4 +1,5 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { arraysEqual, groupByFunction, sumOnArray } from '@firestone/shared/utils';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { GameStat } from '../../../models/mainwindow/stats/game-stat';
@@ -18,7 +19,6 @@ import { getHeroRole } from '../../../services/mercenaries/mercenaries-utils';
 import { OverwolfService } from '../../../services/overwolf.service';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
 import { filterMercenariesCompositions } from '../../../services/ui-store/mercenaries-ui-helper';
-import { arraysEqual, groupByFunction, sumOnArray } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 import { MercenaryCompositionInfoBench, MercenaryInfo } from './mercenary-info';
 

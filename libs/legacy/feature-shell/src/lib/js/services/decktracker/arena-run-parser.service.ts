@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Input as ArenaRewards } from '@firestone-hs/api-arena-rewards/dist/sqs-event';
 import { GameType, SceneMode } from '@firestone-hs/reference-data';
+import { uuid } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { ArenaInfo } from '../../models/arena-info';
 import { GameEvent } from '../../models/game-event';
@@ -16,7 +17,6 @@ import { ManastormInfo } from '../manastorm-bridge/manastorm-info';
 import { OverwolfService } from '../overwolf.service';
 import { MemoryInspectionService } from '../plugins/memory-inspection.service';
 import { PreferencesService } from '../preferences.service';
-import { uuid } from '../utils';
 
 const UPDATE_URL = 'https://api.firestoneapp.com/userArenaRewards/post/arenaRewards/{proxy+}';
 

@@ -1,4 +1,4 @@
-import { NonFunctionProperties } from '@services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { DeckCard } from './deck-card';
 
 export class VisualDeckCard extends DeckCard {

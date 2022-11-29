@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { decode as decodeDeckstring } from '@firestone-hs/deckstrings';
 import { BgsPostMatchStats } from '@firestone-hs/hs-replay-xml-parser/dist/public-api';
+import { decode } from '@firestone/shared/utils';
 import { GameStat } from '../../../models/mainwindow/stats/game-stat';
 import { GameStats } from '../../../models/mainwindow/stats/game-stats';
 import { StatGameModeType } from '../../../models/mainwindow/stats/stat-game-mode.type';
@@ -11,7 +12,6 @@ import { getDefaultHeroDbfIdForClass } from '../../hs-utils';
 import { isMercenaries } from '../../mercenaries/mercenaries-utils';
 import { OverwolfService } from '../../overwolf.service';
 import { PreferencesService } from '../../preferences.service';
-import { decode } from '../../utils';
 
 const GAME_STATS_ENDPOINT = 'https://api.firestoneapp.com/retrieveUserMatchStats/matchStats';
 const ARCHETYPE_CONFIG_ENDPOINT = 'https://static.zerotoheroes.com/api/decks-config.json';

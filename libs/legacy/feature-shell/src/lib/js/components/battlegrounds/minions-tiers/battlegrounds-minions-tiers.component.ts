@@ -9,13 +9,13 @@ import {
 	ViewEncapsulation,
 } from '@angular/core';
 import { CardIds, GameTag, Race, ReferenceCard } from '@firestone-hs/reference-data';
+import { groupByFunction } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { combineLatest, Observable } from 'rxjs';
 import { getAllCardsInGame, getEffectiveTribe } from '../../../services/battlegrounds/bgs-utils';
 import { DebugService } from '../../../services/debug.service';
 import { LocalizationFacadeService } from '../../../services/localization-facade.service';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { groupByFunction } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 import { Tier } from './battlegrounds-minions-tiers-view.component';
 

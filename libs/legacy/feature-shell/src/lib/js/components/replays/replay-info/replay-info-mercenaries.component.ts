@@ -1,6 +1,7 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ScenarioId } from '@firestone-hs/reference-data';
+import { capitalizeEachWord } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { combineLatest, Observable } from 'rxjs';
 import { RunStep } from '../../../models/duels/run-step';
@@ -9,7 +10,6 @@ import { StatGameModeType } from '../../../models/mainwindow/stats/stat-game-mod
 import { LocalizationFacadeService } from '../../../services/localization-facade.service';
 import { getHeroRole, normalizeMercenariesCardId } from '../../../services/mercenaries/mercenaries-utils';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { capitalizeEachWord } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 import { extractTime } from './replay-info-ranked.component';
 
@@ -61,7 +61,7 @@ import { extractTime } from './replay-info-ranked.component';
 
 				<div
 					class="group mmr"
-					[ngClass]="{ 'positive': deltaMmr > 0, 'negative': deltaMmr < 0 }"
+					[ngClass]="{ positive: deltaMmr > 0, negative: deltaMmr < 0 }"
 					*ngIf="deltaMmr != null"
 				>
 					<div class="value">{{ deltaMmr }}</div>

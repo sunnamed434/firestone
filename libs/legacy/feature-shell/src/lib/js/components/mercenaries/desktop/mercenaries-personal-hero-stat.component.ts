@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
 import { CardRarity } from '@firestone-hs/reference-data';
+import { deepEqual } from '@firestone/shared/utils';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { FeatureFlags } from '../../../services/feature-flags';
 import { MercenariesViewMercDetailsEvent } from '../../../services/mainwindow/store/events/mercenaries/mercenaries-view-merc-details-event';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { deepEqual } from '../../../services/utils';
 import { PersonalHeroStat } from './mercenaries-personal-hero-stats.component';
 
 @Component({

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { Injectable } from '@angular/core';
 import { MailboxMessagesInfo } from '@firestone-hs/mailbox';
+import { deepEqual } from '@firestone/shared/utils';
+import { Mail, MailState } from '@legacy-import/src/lib/libs/mails/mail-state';
 import { ApiRunner } from '@services/api-runner';
 import { AppUiStoreFacadeService } from '@services/ui-store/app-ui-store-facade.service';
-import { deepEqual } from '@services/utils';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { Mail, MailState } from '../mail-state';
 
 const MAILS_URL = 'https://static.zerotoheroes.com/api/mailbox/mailbox.gz.json';
 

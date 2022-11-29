@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReferenceCard } from '@firestone-hs/reference-data';
+import { capitalizeEachWord } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { Subscription } from 'rxjs';
 import { RunStep } from '../../../models/duels/run-step';
@@ -18,7 +19,6 @@ import { LocalizationFacadeService } from '../../../services/localization-facade
 import { ShowReplayEvent } from '../../../services/mainwindow/store/events/replays/show-replay-event';
 import { TriggerShowMatchStatsEvent } from '../../../services/mainwindow/store/events/replays/trigger-show-match-stats-event';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { capitalizeEachWord } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 import { extractTime } from './replay-info-ranked.component';
 

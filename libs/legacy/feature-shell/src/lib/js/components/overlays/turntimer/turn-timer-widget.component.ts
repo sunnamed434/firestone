@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { AbstractSubscriptionComponent } from '@components/abstract-subscription.component';
 import { GameType } from '@firestone-hs/reference-data';
+import { sumOnArray } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { AppUiStoreFacadeService } from '@services/ui-store/app-ui-store-facade.service';
@@ -16,7 +17,6 @@ import { combineLatest, interval, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { TurnTiming } from '../../../models/decktracker/deck-state';
 import { GenericPreferencesUpdateEvent } from '../../../services/mainwindow/store/events/generic-preferences-update-event';
-import { sumOnArray } from '../../../services/utils';
 
 @Component({
 	selector: 'turn-timer-widget',
@@ -169,7 +169,7 @@ export class TurnTimerWidgetComponent extends AbstractSubscriptionComponent impl
 	selector: 'turn-timer-player',
 	styleUrls: ['../../../../css/component/overlays/turntimer/turn-timer-widget.component.scss'],
 	template: `
-		<div class="player-timer" [ngClass]="{ 'active': active }">
+		<div class="player-timer" [ngClass]="{ active: active }">
 			<div class="player-name" [helpTooltip]="playerName">{{ playerName }}</div>
 			<div class="turn-length current">
 				<div

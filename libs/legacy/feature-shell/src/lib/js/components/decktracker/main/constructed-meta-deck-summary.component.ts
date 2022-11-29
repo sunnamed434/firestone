@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { DeckStat } from '@firestone-hs/deck-stats';
 import { decode } from '@firestone-hs/deckstrings';
+import { sortByProperties } from '@firestone/shared/utils';
 import { CardsFacadeService } from '../../../services/cards-facade.service';
 import { dustToCraftFor } from '../../../services/hs-utils';
 import { LocalizationFacadeService } from '../../../services/localization-facade.service';
-import { sortByProperties } from '../../../services/utils';
 
 @Component({
 	selector: 'constructed-meta-deck-summary',

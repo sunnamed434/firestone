@@ -1,9 +1,9 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { BgsBestStat } from '@firestone-hs/user-bgs-post-match-stats';
+import { groupByFunction } from '@firestone/shared/utils';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AppUiStoreFacadeService } from '../../../../services/ui-store/app-ui-store-facade.service';
-import { groupByFunction } from '../../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../../abstract-subscription.component';
 import { HeroStat } from './hero-stat';
 
@@ -32,7 +32,8 @@ declare let amplitude;
 })
 export class BattlegroundsHeroesRecordsBrokenComponent
 	extends AbstractSubscriptionComponent
-	implements AfterContentInit {
+	implements AfterContentInit
+{
 	stats$: Observable<readonly HeroStat[]>;
 
 	constructor(protected readonly store: AppUiStoreFacadeService, protected readonly cdr: ChangeDetectorRef) {

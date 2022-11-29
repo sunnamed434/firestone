@@ -1,4 +1,4 @@
-import { NonFunctionProperties } from '../../../services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 
 export class BattlegroundsCategory {
 	readonly id:

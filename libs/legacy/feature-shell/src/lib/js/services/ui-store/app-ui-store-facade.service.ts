@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MailState } from '@mails/mail-state';
+import { MailState } from '@legacy-import/src/lib/libs/mails/mail-state';
 import { DuelsGroupedDecks } from '@models/duels/duels-grouped-decks';
 import { DuelsHeroPlayerStat } from '@models/duels/duels-player-stats';
 import { Observable } from 'rxjs';

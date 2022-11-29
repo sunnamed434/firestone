@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { BoosterType } from '@firestone-hs/reference-data';
+import { groupByFunction, sleep } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, filter, tap } from 'rxjs/operators';
@@ -21,7 +22,6 @@ import {
 import { OverwolfService } from '../overwolf.service';
 import { MemoryInspectionService } from '../plugins/memory-inspection.service';
 import { PreferencesService } from '../preferences.service';
-import { groupByFunction, sleep } from '../utils';
 import { CardNotificationsService } from './card-notifications.service';
 import { CollectionManager } from './collection-manager.service';
 

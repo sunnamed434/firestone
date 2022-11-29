@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { SceneMode } from '@firestone-hs/reference-data';
+import { sleep } from '@firestone/shared/utils';
 import { DuelsMemoryCacheService } from '@services/duels/duels-memory-cache.service';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { ArenaState } from '../../../models/arena/arena-state';
@@ -33,7 +34,6 @@ import { PreferencesService } from '../../preferences.service';
 import { GameStatsLoaderService } from '../../stats/game/game-stats-loader.service';
 import { StatsStateBuilderService } from '../../stats/stats-state-builder.service';
 import { UserService } from '../../user.service';
-import { sleep } from '../../utils';
 import { CollectionBootstrapService } from './collection-bootstrap.service';
 import { MainWindowStoreEvent } from './events/main-window-store-event';
 import { StoreInitEvent } from './events/store-init-event';

@@ -1,6 +1,6 @@
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { AppInjector } from '../../../services/app-injector';
 import { LazyDataInitService } from '../../../services/lazy-data-init.service';
-import { NonFunctionProperties } from '../../../services/utils';
 import { BgsPostMatchStatsForReview } from '../../battlegrounds/bgs-post-match-stats-for-review';
 import { BgsStats } from '../../battlegrounds/stats/bgs-stats';
 import { PatchInfo } from '../../patches';

@@ -1,9 +1,9 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input } from '@angular/core';
+import { isWindowClosed } from '@firestone/shared/utils';
 import { CloseMainWindowEvent } from '../../services/mainwindow/store/events/close-main-window-event';
 import { MainWindowStoreEvent } from '../../services/mainwindow/store/events/main-window-store-event';
 import { OverwolfService } from '../../services/overwolf.service';
 import { PreferencesService } from '../../services/preferences.service';
-import { isWindowClosed } from '../../services/utils';
 
 declare let amplitude;
 
@@ -49,7 +49,7 @@ export class ControlCloseComponent implements AfterViewInit {
 
 	async closeWindow() {
 		const windowName = (await this.ow.getCurrentWindow()).name;
-		amplitude.getInstance().logEvent('close', { 'window': windowName });
+		amplitude.getInstance().logEvent('close', { window: windowName });
 
 		if (this.isMainWindow) {
 			this.stateUpdater.next(new CloseMainWindowEvent());

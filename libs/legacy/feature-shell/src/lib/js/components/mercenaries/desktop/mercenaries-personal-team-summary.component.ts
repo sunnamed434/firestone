@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { groupByFunction } from '@firestone/shared/utils';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { GameStat } from '../../../models/mainwindow/stats/game-stat';
 import { CardsFacadeService } from '../../../services/cards-facade.service';
@@ -6,7 +7,6 @@ import { MercenariesHideTeamSummaryEvent } from '../../../services/mainwindow/st
 import { MercenariesRestoreTeamSummaryEvent } from '../../../services/mainwindow/store/events/mercenaries/mercenaries-restore-team-summary-event';
 import { getHeroRole, normalizeMercenariesCardId } from '../../../services/mercenaries/mercenaries-utils';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { groupByFunction } from '../../../services/utils';
 import { MercenaryPersonalTeamInfo } from './mercenary-info';
 
 @Component({

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, ElementRef, HostListener, Injectable, Renderer2, ViewRef } from '@angular/core';
-import { sleep } from '@services/utils';
+import { sleep } from '@firestone/shared/utils';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { AbstractSubscriptionTwitchComponent } from './abstract-subscription-twitch.component';

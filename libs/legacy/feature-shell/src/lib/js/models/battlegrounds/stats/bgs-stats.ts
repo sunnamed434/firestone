@@ -1,8 +1,8 @@
 import { BgsGlobalHeroStat2, MmrPercentile } from '@firestone-hs/bgs-global-stats';
 import { Race } from '@firestone-hs/reference-data';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { AppInjector } from '../../../services/app-injector';
 import { LazyDataInitService } from '../../../services/lazy-data-init.service';
-import { NonFunctionProperties } from '../../../services/utils';
 
 export class BgsStats {
 	readonly lastUpdateDate: string;

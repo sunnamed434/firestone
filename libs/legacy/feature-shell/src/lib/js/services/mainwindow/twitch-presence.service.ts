@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GameFormat, GameType } from '@firestone-hs/reference-data';
+import { arraysEqual } from '@firestone/shared/utils';
 import { combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, startWith } from 'rxjs/operators';
 import { ArenaInfo } from '../../models/arena-info';
@@ -18,7 +19,6 @@ import { GameEventsEmitterService } from '../game-events-emitter.service';
 import { isMercenaries } from '../mercenaries/mercenaries-utils';
 import { OverwolfService } from '../overwolf.service';
 import { AppUiStoreFacadeService } from '../ui-store/app-ui-store-facade.service';
-import { arraysEqual } from '../utils';
 
 const UPDATE_URL = 'https://api.firestoneapp.com/twitch-presence';
 

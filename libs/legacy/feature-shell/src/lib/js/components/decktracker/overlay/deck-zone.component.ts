@@ -8,6 +8,7 @@ import {
 	Optional,
 	Output,
 } from '@angular/core';
+import { groupByFunction } from '@firestone/shared/utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { CardTooltipPositionType } from '../../../directives/card-tooltip-position.type';
 import { DeckZone, DeckZoneSection } from '../../../models/decktracker/view/deck-zone';
@@ -15,7 +16,6 @@ import { VisualDeckCard } from '../../../models/decktracker/visual-deck-card';
 import { SetCard } from '../../../models/set';
 import { PreferencesService } from '../../../services/preferences.service';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { groupByFunction } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 
 @Component({

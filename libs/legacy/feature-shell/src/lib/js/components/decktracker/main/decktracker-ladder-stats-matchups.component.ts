@@ -1,11 +1,11 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { groupByFunction } from '@firestone/shared/utils';
 import { combineLatest, Observable } from 'rxjs';
 import { GameStat } from '../../../models/mainwindow/stats/game-stat';
 import { classes, formatClass } from '../../../services/hs-utils';
 import { LocalizationFacadeService } from '../../../services/localization-facade.service';
 import { GenericPreferencesUpdateEvent } from '../../../services/mainwindow/store/events/generic-preferences-update-event';
 import { AppUiStoreFacadeService } from '../../../services/ui-store/app-ui-store-facade.service';
-import { groupByFunction } from '../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../abstract-subscription.component';
 
 @Component({
@@ -51,7 +51,7 @@ import { AbstractSubscriptionComponent } from '../../abstract-subscription.compo
 					<ng-container *ngFor="let matchup of row.matchups">
 						<div
 							class="cell winrate number"
-							[ngClass]="{ 'empty': matchup.wins === 0 && matchup.losses === 0 }"
+							[ngClass]="{ empty: matchup.wins === 0 && matchup.losses === 0 }"
 							*ngIf="!value.showPercentages"
 						>
 							<span class="wins" *ngIf="matchup.wins > 0 || matchup.losses > 0">{{ matchup.wins }}</span>
@@ -63,9 +63,9 @@ import { AbstractSubscriptionComponent } from '../../abstract-subscription.compo
 						<div
 							class="cell winrate"
 							[ngClass]="{
-								'empty': matchup.wins === 0 && matchup.losses === 0,
-								'positive': matchup.wins > 0 && matchup.winrate > 51,
-								'negative': matchup.losses > 0 && matchup.winrate < 49
+								empty: matchup.wins === 0 && matchup.losses === 0,
+								positive: matchup.wins > 0 && matchup.winrate > 51,
+								negative: matchup.losses > 0 && matchup.winrate < 49
 							}"
 							*ngIf="value.showPercentages"
 						>

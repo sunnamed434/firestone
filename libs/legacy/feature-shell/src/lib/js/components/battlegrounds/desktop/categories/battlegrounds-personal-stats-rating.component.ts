@@ -1,4 +1,5 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { addDaysToDate, daysBetweenDates, formatDate, groupByFunction } from '@firestone/shared/utils';
 import { ChartData } from 'chart.js';
 import { combineLatest, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -9,7 +10,6 @@ import { PatchInfo } from '../../../../models/patches';
 import { isBattlegrounds } from '../../../../services/battlegrounds/bgs-utils';
 import { LocalizationFacadeService } from '../../../../services/localization-facade.service';
 import { AppUiStoreFacadeService } from '../../../../services/ui-store/app-ui-store-facade.service';
-import { addDaysToDate, daysBetweenDates, formatDate, groupByFunction } from '../../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../../abstract-subscription.component';
 
 @Component({

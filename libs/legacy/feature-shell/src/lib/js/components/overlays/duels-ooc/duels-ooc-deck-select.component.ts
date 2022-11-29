@@ -3,6 +3,7 @@ import { AbstractSubscriptionComponent } from '@components/abstract-subscription
 import { DuelsDeckWidgetDeck } from '@components/overlays/duels-ooc/duels-deck-widget-deck';
 import { allDuelsSignatureTreasures, CardIds } from '@firestone-hs/reference-data';
 import { DuelsRunInfo } from '@firestone-hs/retrieve-users-duels-runs/dist/duels-run-info';
+import { groupByFunction, sortByProperties } from '@firestone/shared/utils';
 import { DuelsGroupedDecks } from '@models/duels/duels-grouped-decks';
 import { DuelsDeckStat } from '@models/duels/duels-player-stats';
 import { DuelsRun } from '@models/duels/duels-run';
@@ -15,7 +16,6 @@ import { DuelsBuildDeckEvent } from '@services/mainwindow/store/events/duels/due
 import { DuelsExploreDecksEvent } from '@services/mainwindow/store/events/duels/duels-explore-decks-event';
 import { AppUiStoreFacadeService } from '@services/ui-store/app-ui-store-facade.service';
 import { topDeckApplyFilters } from '@services/ui-store/duels-ui-helper';
-import { groupByFunction, sortByProperties } from '@services/utils';
 import { combineLatest, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 

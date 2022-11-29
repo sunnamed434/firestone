@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable, Optional } from '@angular/core';
 import { Race } from '@firestone-hs/reference-data';
+import { capitalizeFirstLetter, deepEqual } from '@firestone/shared/utils';
 import { BehaviorSubject } from 'rxjs';
 import { ArenaClassFilterType } from '../models/arena/arena-class-filter.type';
 import { ArenaTimeFilterType } from '../models/arena/arena-time-filter.type';
@@ -34,7 +35,6 @@ import { ApiRunner } from './api-runner';
 import { GenericStorageService } from './generic-storage.service';
 import { OutOfCardsToken } from './mainwindow/out-of-cards.service';
 import { OverwolfService } from './overwolf.service';
-import { capitalizeFirstLetter, deepEqual } from './utils';
 
 declare let amplitude;
 

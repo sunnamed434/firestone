@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { sleep, uuid } from '@firestone/shared/utils';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { OwNotificationsService } from '@services/notifications.service';
 import { Action, CurrentState } from '@services/plugins/mind-vision/mind-vision-actions';
 import { MindVisionFacadeService } from '@services/plugins/mind-vision/mind-vision-facade.service';
 import { MindVisionState } from '@services/plugins/mind-vision/states/_mind-vision-state';
-import { sleep, uuid } from '@services/utils';
 
 export class MindVisionStateReset implements MindVisionState {
 	constructor(

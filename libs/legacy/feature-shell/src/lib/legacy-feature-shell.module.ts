@@ -457,6 +457,8 @@ import { AutofocusDirective } from './js/directives/autofocus.directive';
 import { DaemonComponent } from './libs/boostrap/daemon.component';
 
 import { AllCardsService } from '@firestone-hs/replay-parser';
+import { SharedCoreModule } from '@firestone/shared/core';
+import { SharedUtilsModule } from '@firestone/shared/utils';
 import { MailboxDesktopComponent } from '@mails/components/mailbox-desktop.component';
 import { MailboxMessageComponent } from '@mails/components/mailbox-message/mailbox-message.component';
 import { MailboxComponent } from '@mails/components/mailbox/mailbox.component';
@@ -784,7 +786,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
 	imports: [
-		// Needed for Twitch
 		CommonModule,
 		HttpClientModule,
 		BrowserAnimationsModule,
@@ -801,6 +802,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ReactiveFormsModule,
 
 		ColiseumComponentsModule,
+		SharedUtilsModule,
+		SharedCoreModule,
+
 		NgxChartsModule,
 		NgChartsModule,
 		TranslateModule.forRoot({
@@ -813,7 +817,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 		}),
 		DragDropModule,
 
-		// For the app
 		A11yModule,
 		OverlayModule,
 

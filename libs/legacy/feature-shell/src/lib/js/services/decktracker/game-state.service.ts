@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { GameTag } from '@firestone-hs/reference-data';
+import { uuid } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { AttackOnBoardService, hasTag } from '@services/decktracker/attack-on-board.service';
 import { EntityChosenParser } from '@services/decktracker/event-parser/entity-chosen-parser';
@@ -27,7 +28,6 @@ import { MemoryInspectionService } from '../plugins/memory-inspection.service';
 import { OwUtilsService } from '../plugins/ow-utils.service';
 import { PreferencesService } from '../preferences.service';
 import { ProcessingQueue } from '../processing-queue.service';
-import { uuid } from '../utils';
 import { AiDeckService } from './ai-deck-service.service';
 import { DeckCardService } from './deck-card.service';
 import { DeckHandlerService } from './deck-handler.service';

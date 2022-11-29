@@ -1,8 +1,8 @@
 import { BgsPostMatchStats } from '@firestone-hs/hs-replay-xml-parser/dist/public-api';
 import { BnetRegion, GALAKROND_EVIL, GALAKROND_EXPLORER, Race } from '@firestone-hs/reference-data';
+import { capitalizeEachWord, NonFunctionProperties } from '@firestone/shared/utils';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { isMercenariesPvP } from '../../../services/mercenaries/mercenaries-utils';
-import { capitalizeEachWord, NonFunctionProperties } from '../../../services/utils';
 import { CoinPlayType } from '../replays/coin-play.type';
 import { MatchResultType } from '../replays/match-result.type';
 import { StatGameFormatType } from './stat-game-format.type';
@@ -68,9 +68,7 @@ export class GameStat {
 		return this.gameMode === 'battlegrounds' || this.gameMode === 'battlegrounds-friendly';
 	}
 
-	public buildPlayerRankImage(
-		i18n: LocalizationFacadeService,
-	): {
+	public buildPlayerRankImage(i18n: LocalizationFacadeService): {
 		frameImage?: string;
 		medalImage?: string;
 		tooltip?: string;

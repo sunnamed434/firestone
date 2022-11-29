@@ -1,5 +1,5 @@
+import { Mail } from '@legacy-import/src/lib/libs/mails/mail-state';
 import { MainWindowStoreEvent } from '../../../js/services/mainwindow/store/events/main-window-store-event';
-import { Mail } from '../mail-state';
 
 export class MailboxMarkMessageReadEvent implements MainWindowStoreEvent {
 	constructor(public readonly message: Mail) {}

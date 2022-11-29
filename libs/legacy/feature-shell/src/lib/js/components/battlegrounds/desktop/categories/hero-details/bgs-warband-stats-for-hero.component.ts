@@ -1,4 +1,5 @@
 import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { arraysEqual } from '@firestone/shared/utils';
 import { combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { BgsPostMatchStatsForReview } from '../../../../../models/battlegrounds/bgs-post-match-stats-for-review';
@@ -6,7 +7,6 @@ import { NumericTurnInfo } from '../../../../../models/battlegrounds/post-match/
 import { BgsHeroStat } from '../../../../../models/battlegrounds/stats/bgs-hero-stat';
 import { AppUiStoreFacadeService } from '../../../../../services/ui-store/app-ui-store-facade.service';
 import { currentBgHeroId } from '../../../../../services/ui-store/app-ui-store.service';
-import { arraysEqual } from '../../../../../services/utils';
 import { AbstractSubscriptionComponent } from '../../../../abstract-subscription.component';
 
 @Component({

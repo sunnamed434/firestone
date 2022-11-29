@@ -1,8 +1,8 @@
+import { sortByProperties } from '@firestone/shared/utils';
 import { GameEvent } from '../../../models/game-event';
 import { MainWindowState } from '../../../models/mainwindow/main-window-state';
 import { MercenariesAction, MercenariesBattleState } from '../../../models/mercenaries/mercenaries-battle-state';
 import { CardsFacadeService } from '../../cards-facade.service';
-import { sortByProperties } from '../../utils';
 import { isPassiveMercsTreasure } from '../mercenaries-utils';
 import { MercenariesParser } from './_mercenaries-parser';
 

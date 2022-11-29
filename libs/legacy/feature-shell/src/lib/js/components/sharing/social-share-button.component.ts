@@ -8,8 +8,8 @@ import {
 	Input,
 	ViewRef,
 } from '@angular/core';
+import { capitalizeFirstLetter } from '@firestone/shared/utils';
 import { OverwolfService } from '../../services/overwolf.service';
-import { capitalizeFirstLetter } from '../../services/utils';
 
 declare let amplitude;
 
@@ -59,8 +59,8 @@ export class SocialShareButtonComponent implements AfterViewInit {
 		console.log('starting sharing');
 		setTimeout(async () => {
 			amplitude.getInstance().logEvent('share', {
-				'page': this.page,
-				'network': this._network,
+				page: this.page,
+				network: this._network,
 			});
 			const [screenshotLocation, base64Image] = await this.onSocialClick(copyToCliboard);
 			if (!screenshotLocation || !base64Image) {

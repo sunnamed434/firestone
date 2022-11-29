@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
+import { groupByFunction } from '@firestone/shared/utils';
 import { LocalizationFacadeService } from '@services/localization-facade.service';
 import { GroupedReplays } from '../../models/mainwindow/replays/grouped-replays';
 import { GameStat } from '../../models/mainwindow/stats/game-stat';
-import { groupByFunction } from '../../services/utils';
 
 @Component({
 	selector: 'replays-list-view',

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReferenceCard, ReferenceCardAudio } from '@firestone-hs/reference-data';
+import { capitalizeEachWord, pickRandom } from '@firestone/shared/utils';
 import { CardsFacadeService } from '@services/cards-facade.service';
 import { getHeroFaction } from '@services/mercenaries/mercenaries-utils';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -18,7 +19,6 @@ import { SetsService } from '../../services/collection/sets-service.service';
 import { formatClass } from '../../services/hs-utils';
 import { LocalizationFacadeService } from '../../services/localization-facade.service';
 import { AppUiStoreFacadeService } from '../../services/ui-store/app-ui-store-facade.service';
-import { capitalizeEachWord, pickRandom } from '../../services/utils';
 import { AbstractSubscriptionComponent } from '../abstract-subscription.component';
 
 declare let amplitude;

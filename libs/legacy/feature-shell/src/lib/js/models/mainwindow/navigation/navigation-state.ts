@@ -1,4 +1,4 @@
-import { NonFunctionProperties } from '../../../services/utils';
+import { NonFunctionProperties } from '@firestone/shared/utils';
 import { CurrentAppType } from '../current-app.type';
 import { NavigationAchievements } from './navigation-achievements';
 import { NavigationArena } from './navigation-arena';

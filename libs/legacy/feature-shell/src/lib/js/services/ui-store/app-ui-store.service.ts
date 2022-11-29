@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { DuelsHeroStat } from '@firestone-hs/duels-global-stats/dist/stat';
-import { MailState } from '@mails/mail-state';
+import { arraysEqual } from '@firestone/shared/utils';
+import { MailState } from '@legacy-import/src/lib/libs/mails/mail-state';
 import { MailsService } from '@mails/services/mails.service';
 import { DuelsGroupedDecks } from '@models/duels/duels-grouped-decks';
 import { DuelsHeroPlayerStat } from '@models/duels/duels-player-stats';
@@ -43,7 +44,6 @@ import { MainWindowStoreEvent } from '../mainwindow/store/events/main-window-sto
 import { HighlightSelector } from '../mercenaries/highlights/mercenaries-synergies-highlight.service';
 import { OverwolfService } from '../overwolf.service';
 import { GameStatsProviderService } from '../stats/game/game-stats-provider.service';
-import { arraysEqual } from '../utils';
 import { buildHeroStats } from './bgs-ui-helper';
 
 export type Selector<T> = (fullState: [MainWindowState, NavigationState, Preferences?]) => T;

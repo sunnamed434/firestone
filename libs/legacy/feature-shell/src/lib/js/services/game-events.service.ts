@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SceneMode } from '@firestone-hs/reference-data';
+import { freeRegexp } from '@firestone/shared/utils';
 import { GameEvent, GameEventPlayer } from '../models/game-event';
 import { ChoosingOptionsGameEvent } from '../models/mainwindow/game-events/choosing-options-game-event';
 import { CopiedFromEntityIdGameEvent } from '../models/mainwindow/game-events/copied-from-entity-id-game-event';
@@ -17,7 +18,6 @@ import { GameEventsPluginService } from './plugins/game-events-plugin.service';
 import { MemoryInspectionService } from './plugins/memory-inspection.service';
 import { PreferencesService } from './preferences.service';
 import { ProcessingQueue } from './processing-queue.service';
-import { freeRegexp } from './utils';
 
 declare let amplitude;
 

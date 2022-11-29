@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
+import { uuid } from '@firestone/shared/utils';
 import * as S3 from 'aws-sdk/clients/s3';
 import * as AWS from 'aws-sdk/global';
 import * as JSZip from 'jszip';
 import { Events } from '../events.service';
 import { OverwolfService } from '../overwolf.service';
 import { PreferencesService } from '../preferences.service';
-import { uuid } from '../utils';
 import { GameForUpload } from './game-for-upload';
 import { ManastormInfo } from './manastorm-info';
 
